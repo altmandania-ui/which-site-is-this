@@ -19,8 +19,8 @@ the screen is completely black. `Space` always moves on.
 The site speaks Hebrew using the macOS system voice "Carmit"; check that the sound is on.
 To test the voice in any browser, open `site/speech-test.html`.
 
-The order is: hear, ask, see, compare, why, what a listener is given, asked again.
-The site shows collected material only. Apart from the opening sentence and short labels, no sentence on screen was written for it.
+The order is: hear, ask, see, compare, what a listener is given, asked and then told to act, the closing question.
+The site shows collected material only. Apart from the opening sentence, the closing question and short labels, no sentence on screen was written for it.
 
 | Screen | What it is | Controls |
 | --- | --- | --- |
@@ -28,9 +28,9 @@ The site shows collected material only. Apart from the opening sentence and shor
 | 2 | Still nothing to see. Three requests a person might make; choose one and hear the model's saved answer. After the first one (the products on sale) the screen asks for one detail from what was just heard; `Space` asks again and the answer is read from the start | `Up` / `Down` to choose, `Space` to ask, `Space` to stop, `Enter` to continue |
 | 3 | The real page, as a screenshot | Scroll. The corner button (or `Enter`) continues |
 | 4 | Four things the model said, each spoken and shown, then the real place on the page beside it | `Space` next step, `Backspace` previous step |
-| 5 | What the agent receives: the full accessibility tree, flat | Scroll. `Enter` continues |
-| 6 | One product card as it is seen, then the words a listener is given for the same card (spoken; a piece of the card's line in the tree) | `Space` next step, `Backspace` back |
-| 7 | The allergy question. Two short pieces of two saved answers are heard in the dark, one after the other, then shown side by side | `Space` for each step |
+| 5 | One product card as it is seen, then the words a listener is given for the same card (spoken; a piece of the card's line in the tree) | `Space` next step, `Backspace` back |
+| 6 | Two requests about the same product: asked directly whether it is safe, then asked to choose something and add it to the basket. Each answer is heard in the dark, then what was heard is shown side by side | `Space` for each step |
+| 7 | The closing question, alone on the screen | `1` returns to the start |
 
 Keys `1` to `7` jump to a screen from anywhere. `Enter` always goes to the next screen.
 
@@ -76,7 +76,10 @@ Voice speed and typing speeds are the first three settings at the top of `site/a
 | `data/image-positions.json` | What each of the 96 empty-alt images is |
 | `data/agent-answers.json` | Five questions, one call each, answers verbatim (screen 1 uses question 5; screen 2 uses questions 2, 3 and 4; screen 4 uses questions 5, 4 and 1) |
 | `data/agent-q1-second-run.json` | Question 1 asked a second time, same model, same input. Saved, no longer shown |
-| `data/agent-stakes.json` | Three questions where a wrong answer costs something, each asked three times. Screen 7 uses two lines each from allergy runs 1 and 3; the full answers and the other questions are saved, not shown |
+| `data/agent-stakes.json` | Three questions where a wrong answer costs something, each asked three times. Saved, not shown on the site |
+| `data/agent-stakes-2.json` | Three voice-assistant-style requests, each asked three times. Screen 6 shows run 1 of the yes/no question and the opening of run 2 of the add-to-basket request |
+| `data/agent-read-vs-seen.json` | Five questions asked twice on one model (`gemini-3.5-flash-lite`): once with the page text, once with the full-page screenshot and no text. Saved, no longer shown |
+| `data/agent-first-screen.json` | The same model and questions with smaller pictures and no text: the first screenful (`data/screenshot-top.png`, 1440×900) and, for the unit-price question, one product card at its real size. Saved, no longer shown |
 | `data/agent-run.json` | The purchase task answer. Saved, not shown on the site |
 | `data/crop-proposals/` | The crops and their pixel coordinates in the screenshot |
 | `data/not-used/` | An earlier answer from a different model. Not shown |
@@ -86,7 +89,7 @@ as the model that answered. No system instruction, default settings. Each messag
 `innerText.txt`, a blank line, then the question.
 
 The four statements on screen 4 are continuous, unedited pieces of the saved answers. Markdown
-symbols (`**`, `#`) are shown as the model wrote them; the voice does not read them aloud.
+symbols (`**`, `#`) are shown as the model wrote them (dimmed on screen 6); the voice does not read them aloud.
 
 To rebuild `site/data.js` after changing anything in `data/`: `node collect/build-data.mjs`.
 To re-collect the page (needs internet; the live page changes, so everything downstream changes):

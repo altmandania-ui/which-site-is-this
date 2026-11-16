@@ -28,8 +28,8 @@
 
   --edge-x: 6vw;
   --edge-y: 7vh;
-  --agent-size: 15px;
-  --agent-leading: 1.75;
+  --agent-size: 17px;
+  --agent-leading: 1.7;
 }
 
 * { box-sizing: border-box; }
@@ -72,7 +72,7 @@ html, body {
   margin: 0;
 }
 .question {
-  font: 400 clamp(20px, 1.9vw, 34px)/1.3 var(--font-human);
+  font: 400 clamp(22px, 2.3vw, 42px)/1.25 var(--font-human);
   color: var(--mute);
   margin: 0;
 }
@@ -114,7 +114,7 @@ html, body {
 /* ---------- 4. compare ---------- */
 /* The screen is cut in two. One half stays dark and holds what was said.
    The other half is dark until the place on the page is shown, then it is lit. */
-#screen-4, #screen-6 { padding: 0; }
+#screen-4, #screen-5 { padding: 0; }
 .stage-grid {
   flex: 1;
   min-height: 0;
@@ -141,13 +141,13 @@ html, body {
   align-items: center;
   justify-content: center;
   min-height: 0;
-  padding: 6vh 4vw;
+  padding: 7vh 3vw;
   background: var(--dark);
   transition: background-color 1.4s ease;
 }
 .seen:has(img:not([hidden])) { background: var(--light); }
 
-/* 6: one product card. What is on the screen, what the listener is given, and who wrote it. */
+/* 5: one product card. What is on the screen, what the listener is given, and who wrote it. */
 .w-main {
   font: 400 clamp(26px, 3vw, 54px)/1.25 var(--font-human);
   white-space: pre-wrap;
@@ -156,33 +156,15 @@ html, body {
   min-height: 2.5em;
 }
 .w-main.agent { font-family: var(--font-agent); line-height: 1.4; }
-#screen-6 .seen img { max-height: 62vh; }
 
-/* The picture never grows past its half: it is scaled down to sit inside it with air around it. */
+/* The picture fills its half, scaled up or down to sit inside it with a little air around it. */
 .seen { min-width: 0; overflow: hidden; }
-.seen img { display: block; max-width: 86%; max-height: 62vh; object-fit: contain; animation: arrive 1.8s ease 0.4s both; }
+.seen img { display: block; width: 100%; height: 100%; object-fit: contain; animation: arrive 1.8s ease 0.4s both; }
 .seen img[hidden] { display: none; }
 .said { min-width: 0; }
 
-/* ---------- 5. what the agent receives ---------- */
-/* One flat run of text. Every line identical on purpose. */
-.agent-text {
-  font-family: var(--font-agent);
-  font-size: var(--agent-size);
-  line-height: var(--agent-leading);
-  font-weight: 400;
-  color: var(--light);
-  text-align: left;
-  padding: var(--edge-y) var(--edge-x) 50vh;
-}
-.agent-text div {
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-  min-height: calc(var(--agent-size) * var(--agent-leading));
-}
-
-/* ---------- 6. twice ---------- */
-#screen-7 .question {
+/* ---------- 6. asked, then told to act ---------- */
+#screen-6 .question {
   font-size: clamp(28px, 3.2vw, 58px);
   line-height: 1.08;
   letter-spacing: -0.01em;
@@ -231,11 +213,11 @@ html, body {
 
 /* ---------- listening: nothing on the screen at all ---------- */
 body.blackout { cursor: none; }
-#screen-2, #screen-7 { position: relative; }
-#screen-7 .question, #screen-7 .runs { transition: opacity 1.2s ease; }
-#screen-7.ear .question { opacity: 0; }
-#screen-7 .runs { opacity: 0; }
-#screen-7 .runs.on { opacity: 1; }
+#screen-2, #screen-6 { position: relative; }
+#screen-6 .question, #screen-6 .runs { transition: opacity 1.2s ease; }
+#screen-6.ear .question { opacity: 0; }
+#screen-6 .runs { opacity: 0; }
+#screen-6 .runs.on { opacity: 1; }
 .piece {
   font: 400 clamp(20px, 2.2vw, 40px)/1.35 var(--font-agent);
   white-space: pre-wrap;
@@ -254,3 +236,13 @@ body.blackout { cursor: none; }
   transition: opacity 1.2s ease;
 }
 .again.on { opacity: 1; }
+
+/* 6: two requests and what the voice answered, side by side, large enough to read from the back. */
+.run .ask-q { font: 400 clamp(20px, 2vw, 36px)/1.25 var(--font-human); color: var(--mute); margin: 0 0 4vh; }
+#screen-6 .piece { font-size: clamp(18px, 1.9vw, 34px); line-height: 1.45; margin: 0; }
+.piece .mark { color: var(--mute); opacity: 0.55; }
+#screen-6.both .question { opacity: 0; }
+#screen-6 .runs { align-content: start; margin-top: -8vh; }
+
+/* 7: the end. One sentence, set like the first, hung from the foot instead of the top. */
+#screen-7 .opening { justify-content: flex-end; }

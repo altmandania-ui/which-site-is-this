@@ -1,0 +1,369 @@
+{
+  "provider": "Google Gemini API",
+  "requestedModel": "gemini-3.5-flash-lite",
+  "systemPrompt": null,
+  "generationConfig": null,
+  "inputs": {
+    "screen": "one user message: data/screenshot-top.png (the first screenful, as collected), then the question. No page text.",
+    "card": "one user message: site/assets/crops/vitaminchik.png (one product card cut from the full screenshot, real size), then the question."
+  },
+  "answers": [
+    {
+      "input": "screen",
+      "question": "מה הדבר הכי חשוב בדף הזה?",
+      "answer": "בשביל לקנות יש ללחוץ על \"חיפוש מוצר או ברקוד\" בראש הדף.",
+      "model": "gemini-3.5-flash-lite",
+      "stopReason": "STOP",
+      "usage": {
+        "promptTokenCount": 1104,
+        "candidatesTokenCount": 26,
+        "totalTokenCount": 1130,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 12
+          },
+          {
+            "modality": "IMAGE",
+            "tokenCount": 1092
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "askedAt": "2026-11-16T15:35:35.260Z",
+      "rawResponse": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "בשביל לקנות יש ללחוץ על \"חיפוש מוצר או ברקוד\" בראש הדף.",
+                  "thoughtSignature": "EmAKXgFpFH0TWkIWkkINhHLXbTvW1hj4PV9vPZ/p5dHfed390Uc8VJupZegZJw6alVrEGrvva7d/KXdOtkXeb76gEWy0Nb2rTGTMmahP6wurxIIEzIpA3FYvpFWRqvmHUBY="
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 1104,
+          "candidatesTokenCount": 26,
+          "totalTokenCount": 1130,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 12
+            },
+            {
+              "modality": "IMAGE",
+              "tokenCount": 1092
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-3.5-flash-lite",
+        "responseId": "xCL7arzqNKmD7M8Pt5PH2A0"
+      }
+    },
+    {
+      "input": "screen",
+      "question": "מה הכי בולט בדף, מבחינה חזותית?",
+      "answer": "בהתבסס על התמונה, האלמנטים הבולטים ביותר מבחינה חזותית הם:\n\n1.  **באנר הפרסום העליון (הגדול):** הבאנר המרכזי מציג מוצרים (כמו מוצרי דרדסים) בצבעים עזים מאוד (כחול, ירוק, אדום וסגול), והוא תופס שטח נרחב בחלק העליון של אזור התוכן המרכזי.\n2.  **תמונות המוצרים בסקציית \"מבצעים שבועיים\":**\n    *   בקבוק ה\"ויטמינצ'יק\" הוורוד הבולט.\n    *   קופסת החומוס האדומה והלבנה של שטראוס.\n    *   שקית המחית הירוקה של מטרנה.\n    *   **תגיות המבצע האדומות:** תגיות קטנות בצבע אדום בולט המציינות את ההנחות (למשל, \"1 ב-10\", \"2 ב-10\") שמוצמדות למוצרים אלו.\n3.  **כפתור \"לתשלום\" הכחול:** ממוקם בפינה השמאלית התחתונה, צבוע בכחול כהה עם חץ לבן בולט, ומשמש כקריאה לפעולה (CTA) מרכזית.",
+      "model": "gemini-3.5-flash-lite",
+      "stopReason": "STOP",
+      "usage": {
+        "promptTokenCount": 1110,
+        "candidatesTokenCount": 342,
+        "totalTokenCount": 1452,
+        "promptTokensDetails": [
+          {
+            "modality": "IMAGE",
+            "tokenCount": 1092
+          },
+          {
+            "modality": "TEXT",
+            "tokenCount": 18
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "askedAt": "2026-11-16T15:36:00.719Z",
+      "rawResponse": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "בהתבסס על התמונה, האלמנטים הבולטים ביותר מבחינה חזותית הם:\n\n1.  **באנר הפרסום העליון (הגדול):** הבאנר המרכזי מציג מוצרים (כמו מוצרי דרדסים) בצבעים עזים מאוד (כחול, ירוק, אדום וסגול), והוא תופס שטח נרחב בחלק העליון של אזור התוכן המרכזי.\n2.  **תמונות המוצרים בסקציית \"מבצעים שבועיים\":**\n    *   בקבוק ה\"ויטמינצ'יק\" הוורוד הבולט.\n    *   קופסת החומוס האדומה והלבנה של שטראוס.\n    *   שקית המחית הירוקה של מטרנה.\n    *   **תגיות המבצע האדומות:** תגיות קטנות בצבע אדום בולט המציינות את ההנחות (למשל, \"1 ב-10\", \"2 ב-10\") שמוצמדות למוצרים אלו.\n3.  **כפתור \"לתשלום\" הכחול:** ממוקם בפינה השמאלית התחתונה, צבוע בכחול כהה עם חץ לבן בולט, ומשמש כקריאה לפעולה (CTA) מרכזית.",
+                  "thoughtSignature": "EmAKXgFpFH0TdsM4OOg4IQJZEelQoK1Q3VjTWZTPNIlAwbSyU3ya4X1s0ALnScmJTKC29Dw3oqRrU4wzQazDHtx7HVr6o0Sm3CtFQn5+FP6s0Kn3s91GhdWSMIBO/a853Lo="
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 1110,
+          "candidatesTokenCount": 342,
+          "totalTokenCount": 1452,
+          "promptTokensDetails": [
+            {
+              "modality": "IMAGE",
+              "tokenCount": 1092
+            },
+            {
+              "modality": "TEXT",
+              "tokenCount": 18
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-3.5-flash-lite",
+        "responseId": "3iL7av2ZOoffxs0PysrR8Aw"
+      }
+    },
+    {
+      "input": "screen",
+      "question": "אילו מוצרים במבצע?",
+      "answer": "במבצע:\n\n1. **מטרנה סקוויז מחית תפוח מנגו גזר** - ב-5.40 ₪ (מבצע 2 ב-10).\n2. **חומוס בתוספת טחינה 400 גרם (שטראוס)** - ב-10.00 ₪ (מבצע 1 ב-10).\n3. **ויטמינצ'יק טרופי (עסיס)** - ב-10.00 ₪ (מבצע 1 ב-10).",
+      "model": "gemini-3.5-flash-lite",
+      "stopReason": "STOP",
+      "usage": {
+        "promptTokenCount": 1101,
+        "candidatesTokenCount": 134,
+        "totalTokenCount": 1235,
+        "promptTokensDetails": [
+          {
+            "modality": "IMAGE",
+            "tokenCount": 1092
+          },
+          {
+            "modality": "TEXT",
+            "tokenCount": 9
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "askedAt": "2026-11-16T15:36:09.953Z",
+      "rawResponse": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "במבצע:\n\n1. **מטרנה סקוויז מחית תפוח מנגו גזר** - ב-5.40 ₪ (מבצע 2 ב-10).\n2. **חומוס בתוספת טחינה 400 גרם (שטראוס)** - ב-10.00 ₪ (מבצע 1 ב-10).\n3. **ויטמינצ'יק טרופי (עסיס)** - ב-10.00 ₪ (מבצע 1 ב-10).",
+                  "thoughtSignature": "EmAKXgFpFH0TiMjhFDdKSpjlzdkR1s21Iee0OHzV5Q+1qpFDR2WpXDAhtLQsLlY8wCo/cYASHoO2uWFaieu6+Uo5y5P0TWkamolWW7iD2f+qLN0x2o0YaB+bl3pk2s1LQCE="
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 1101,
+          "candidatesTokenCount": 134,
+          "totalTokenCount": 1235,
+          "promptTokensDetails": [
+            {
+              "modality": "IMAGE",
+              "tokenCount": 1092
+            },
+            {
+              "modality": "TEXT",
+              "tokenCount": 9
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-3.5-flash-lite",
+        "responseId": "4SL7auCTFpCwxN8P9uTZ2Ao"
+      }
+    },
+    {
+      "input": "screen",
+      "question": "כמה עולה הויטמינצ'יק ל-100 מ\"ל?",
+      "answer": "הויטמינצ'יק עולה **10.75 ש\"ח** ל-100 מ\"ל.",
+      "model": "gemini-3.5-flash-lite",
+      "stopReason": "STOP",
+      "usage": {
+        "promptTokenCount": 1115,
+        "candidatesTokenCount": 30,
+        "totalTokenCount": 1145,
+        "promptTokensDetails": [
+          {
+            "modality": "IMAGE",
+            "tokenCount": 1092
+          },
+          {
+            "modality": "TEXT",
+            "tokenCount": 23
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "askedAt": "2026-11-16T15:36:11.423Z",
+      "rawResponse": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "הויטמינצ'יק עולה **10.75 ש\"ח** ל-100 מ\"ל.",
+                  "thoughtSignature": "EmAKXgFpFH0T1fZKTPHcD0IxG3rVrVKOKloos7vnUm45803hvdIxpujQxR/WN6EKMw1zsMQ3n7Xg8nGnUKTdruNaEOSDqWBFuVFS/MtlKW9DdsscgM5cd22MJk0S9RAqgEU="
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 1115,
+          "candidatesTokenCount": 30,
+          "totalTokenCount": 1145,
+          "promptTokensDetails": [
+            {
+              "modality": "IMAGE",
+              "tokenCount": 1092
+            },
+            {
+              "modality": "TEXT",
+              "tokenCount": 23
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-3.5-flash-lite",
+        "responseId": "6iL7arCrJezkxN8PorviwA8"
+      }
+    },
+    {
+      "input": "screen",
+      "question": "תאר את הדף הזה למישהו שלא רואה אותו.",
+      "answer": "צילום מסך של דף הבית של אתר הקניות \"רמי לוי אונליין\" (Rami Levy Online), בעברית.\n\n### מבנה כללי:\n* **חלק עליון (ניווט ראשי):**\n    * בצד שמאל (המקביל לימין בעברית סטנדרטית): לוגו האתר \"רמי לוי Online\".\n    * במרכז: שורת חיפוש גדולה עם אייקון מיקרופון.\n    * בצד ימין: כפתורים להתחברות, גישה להצהרת נגישות, ואפשרויות נוספות כמו הצטרפות למועדון SUPERFLY.\n    * תפריט קטגוריות רוחבי עם אייקונים הכולל: היסטוריית רכישה, מבצעים וקופונים, פירות ירקות וסלטונים, חלב ביצים ודגנים, בשר עוף ודגים, משקאות ואלכוהול, אורגני ובריאות, קפואים ומוצנים, שימורים בישול ואפייה, קטניות ודגנים, חטיפים ומתוקים, תחזוקת הבית והבע\"ח, נייר וחד פעמי, פארם ותינוקות, ולחם ומאפים טריים.\n\n* **סל קניות (בצד שמאל):**\n    * מופיעה איור של שקית קניות אפורה עם פנים מחייכות.\n    * מתחתיו כתוב: \"השקית שלך ריקה... יאללה שופינג!\".\n    * בתחתית המסך משמאל יש כפתור כחול בולט \"לתשלום\" המציג סכום של 0.00 ₪.\n\n* **מרכז הדף (כרזת פרסומת):**\n    * באנר פרסומי מתחלף המציג מבצע על מוצרי דרמקס (Dermex) עם דמויות הדרדסים. יש כפתור \"לרכישה\" בצבע טורקיז וחצים לדפדוף ימינה ושמאלה.\n    * מתחת לבאנר מופיעה כותרת: **\"מבצעים שבועיים\"**.\n\n* **רשימת מוצרים במבצע (שורה תחתונה):**\n    1. **מוצר ימני ביותר:** מחית פירות \"מטרנה סקווייז תפוח מנגו גזר\" (לתינוקות), מוצג בתוך אריזת שפופרת לחיצה. מחיר: 5.40 ₪. יש תגית אדומה בפינה העליונה \"2 ב-10\".\n    2. **מוצר אמצעי:** חומוס תוספת טחינה 400 גרם של המותג \"שטראוס\". מחיר: 10.00 ₪ (במקום 11.20 ₪). יש תגית אדומה בפינה העליונה \"1 ב-10\".\n    3. **מוצר שמאלי ביותר:** סירופ ויטמינצ'יק בטעם טרופי. מחיר: 10.00 ₪ (במקום 14.20 ₪). יש תגית אדומה בפינה העליונה \"1 ב-10\".",
+      "model": "gemini-3.5-flash-lite",
+      "stopReason": "STOP",
+      "usage": {
+        "promptTokenCount": 1107,
+        "candidatesTokenCount": 785,
+        "totalTokenCount": 1892,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 15
+          },
+          {
+            "modality": "IMAGE",
+            "tokenCount": 1092
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "askedAt": "2026-11-16T15:36:15.860Z",
+      "rawResponse": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "צילום מסך של דף הבית של אתר הקניות \"רמי לוי אונליין\" (Rami Levy Online), בעברית.\n\n### מבנה כללי:\n* **חלק עליון (ניווט ראשי):**\n    * בצד שמאל (המקביל לימין בעברית סטנדרטית): לוגו האתר \"רמי לוי Online\".\n    * במרכז: שורת חיפוש גדולה עם אייקון מיקרופון.\n    * בצד ימין: כפתורים להתחברות, גישה להצהרת נגישות, ואפשרויות נוספות כמו הצטרפות למועדון SUPERFLY.\n    * תפריט קטגוריות רוחבי"
+                },
+                {
+                  "text": " עם אייקונים הכולל: היסטוריית רכישה, מבצעים וקופונים, פירות ירקות וסלטונים, חלב ביצים ודגנים, בשר עוף ודגים, משקאות ואלכוהול, אורגני ובריאות, קפואים ומוצנים, שימורים בישול ואפייה, קטניות ודגנים, חטיפים ומתוקים, תחזוקת הבית והבע\"ח, נייר וחד פעמי, פארם ותינוקות, ולחם ומאפים טריים.\n\n* **סל קניות (בצד שמאל):**\n    * מופיעה איור של שקית קניות אפורה עם פנים מחייכות.\n    * מתחתיו כתוב: \"השקית שלך ריקה... יאללה שופינג!\".\n    * בתחתית המסך משמאל יש כפתור כחול בולט \"לתשלום\" המציג סכום של 0.00 ₪.\n\n* **מרכז הדף (כרזת פרסומת):**\n    * באנר פרסומי מתחלף המציג מבצע על מוצרי דרמקס (Dermex) עם דמויות הדרדסים. יש כפתור \"לרכישה\" בצבע טורקיז וחצים לדפדוף ימינה ושמאלה.\n    * מתחת לבאנר מופיעה כותרת: **\"מבצעים שבועיים\"**.\n\n* **רשימת מוצרים במבצע (שורה תחתונה):**\n    1. **מוצר ימני ביותר:** מחית פירות \"מטרנה סקווייז תפוח מנגו גזר\" (לתינוקות), מוצג בתוך אריזת שפופרת לחיצה. מחיר: 5.40 ₪. יש תגית אדומה בפינה העליונה \"2 ב-10\".\n    2. **מוצר אמצעי:** חומוס תוספת טחינה 400 גרם של המותג \"שטראוס\". מחיר: 10.00 ₪ (במקום 11.20 ₪). יש תגית אדומה בפינה העליונה \"1 ב-10\".\n    3. **מוצר שמאלי ביותר:** סירופ ויטמינצ'יק בטעם טרופי. מחיר: 10.00 ₪ (במקום 14.20 ₪). יש תגית אדומה בפינה העליונה \"1 ב-10\".",
+                  "thoughtSignature": "EmAKXgFpFH0T5WMxmOISyOTM9/4QxxvWWUT2kHP8wxmPK79r/aKJYLlGkDLJNNUyRpqJT9Zl78arGNP8yLdWVqSd9zCLdCXsH5UI4e+FpSNXqp2k/7QhyjINrQxoR3bGGMA="
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 1107,
+          "candidatesTokenCount": 785,
+          "totalTokenCount": 1892,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 15
+            },
+            {
+              "modality": "IMAGE",
+              "tokenCount": 1092
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-3.5-flash-lite",
+        "responseId": "7CL7aryFCeuF3boPqrjRsQc"
+      }
+    },
+    {
+      "input": "card",
+      "question": "כמה עולה הויטמינצ'יק ל-100 מ\"ל?",
+      "answer": "על פי התווית המצורפת, המחיר ל-100 מ\"ל הוא **1075.76 ₪** (ככל הנראה מדובר בטעות הדפסה במקור, שכן מחיר הבקבוק עצמו הוא 10.00 ₪).",
+      "model": "gemini-3.5-flash-lite",
+      "stopReason": "STOP",
+      "usage": {
+        "promptTokenCount": 1108,
+        "candidatesTokenCount": 68,
+        "totalTokenCount": 1176,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 23
+          },
+          {
+            "modality": "IMAGE",
+            "tokenCount": 1085
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "askedAt": "2026-11-16T15:36:17.936Z",
+      "rawResponse": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "על פי התווית המצורפת, המחיר ל-100 מ\"ל הוא **1075.76 ₪** (ככל הנראה מדובר בטעות הדפסה במקור, שכן מחיר הבקבוק עצמו הוא 10.00 ₪).",
+                  "thoughtSignature": "EmAKXgFpFH0TFBrIKNFeNIDZ9EE03NOzhI46kaon91LWqFH/+i+HFhmOeQrHJ7Y/vpRNFsMcSPpBAa12cDhOFgZBKFiXarVg7BKVAyEABtOzb3gRz6n8Cs5fpc0Ig4kvIrY="
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 1108,
+          "candidatesTokenCount": 68,
+          "totalTokenCount": 1176,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 23
+            },
+            {
+              "modality": "IMAGE",
+              "tokenCount": 1085
+            }
+          ],
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-3.5-flash-lite",
+        "responseId": "8CL7av_EELGvvdIPpb6t6QM"
+      }
+    }
+  ]
+}
