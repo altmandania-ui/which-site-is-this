@@ -46,13 +46,8 @@
   </div>
 </section>
 
-<!-- 5. What the agent received. -->
-<section id="screen-5" class="screen" data-title="מה שהסוכן מקבל" hidden>
-  <div id="tree" class="agent-text" dir="ltr"></div>
-</section>
-
-<!-- 6. What somebody did write for the one who cannot see. -->
-<section id="screen-6" class="screen stage" data-title="מה שנכתב בשביל מי שלא רואה" hidden>
+<!-- 5. What somebody did write for the one who cannot see. -->
+<section id="screen-5" class="screen stage" data-title="מה שנכתב בשביל מי שלא רואה" hidden>
   <div class="stage-grid">
     <div class="said">
       <p id="w-label" class="question"></p>
@@ -66,11 +61,17 @@
   </div>
 </section>
 
-<!-- 7. The same request, asked again. -->
-<section id="screen-7" class="screen stage" data-title="אותה שאלה, שוב" hidden>
+<!-- 6. Asked directly, then asked to act. -->
+<section id="screen-6" class="screen stage" data-title="לשאול, ואז לבקש" hidden>
   <p id="s7-question" class="question"></p>
   <div id="s7-runs" class="runs"></div>
-  <p id="s7-again" class="again">שואלים שוב.</p>
+</section>
+
+<!-- 7. The end: the question the whole piece was asking. -->
+<section id="screen-7" class="screen stage" data-title="מי מעצב" hidden>
+  <div class="opening">
+    <p class="premise">מי מעצב את מה שהוא שומע?</p>
+  </div>
 </section>
 
 <!-- Presenter hint: what the next key does. Press H to hide or show it. -->
