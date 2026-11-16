@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head><meta charset="utf-8"><title>בדיקת דיבור</title>
+<style>body{font:18px/1.6 system-ui,sans-serif;background:#fafaf7;color:#1a1a1a;margin:40px;max-width:40em}button{font:inherit;padding:8px 14px;border:1px solid #1a1a1a;background:#fafaf7;cursor:pointer}pre{font:14px/1.5 ui-monospace,Menlo,monospace;white-space:pre-wrap;direction:ltr;text-align:left}</style></head>
+<body>
+<p>בדיקת דיבור בעברית בדפדפן הזה.</p>
+<button id="go" type="button">השמעה</button>
+<pre id="out"></pre>
+<script>
+var out = document.getElementById('out');
+function voices() { return speechSynthesis.getVoices().filter(function (v) { return /^he/i.test(v.lang); }); }
+function report() {
+  var v = voices();
+  out.textContent = 'Hebrew voices found: ' + v.length + '\n' + v.map(function (x) { return x.name + ' (' + x.lang + ') ' + (x.localService ? 'offline' : 'NEEDS INTERNET'); }).join('\n');
+}
+report(); speechSynthesis.onvoiceschanged = report;
+document.getElementById('go').onclick = function () {
+  var u = new SpeechSynthesisUtterance('תחתית הדף צבועה ברקע כהה ומכילה מידע שימושי נוסף');
+  u.lang = 'he-IL'; var v = voices()[0]; if (v) u.voice = v;
+  u.onboundary = function () { out.textContent += '\nword boundary event'; };
+  u.onend = function () { out.textContent += '\nfinished'; };
+  u.onerror = function (e) { out.textContent += '\nerror: ' + e.error; };
+  speechSynthesis.cancel(); speechSynthesis.speak(u);
+};
+</script>
+</body></html>
