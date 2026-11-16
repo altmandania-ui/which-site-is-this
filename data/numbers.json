@@ -1,0 +1,262 @@
+{
+  "source": "https://www.rami-levy.co.il/he",
+  "collectedAt": "2026-11-16T07:07:47.162Z",
+  "viewportWidth": 1440,
+  "pageHeightPx": 6259,
+  "innerText": {
+    "chars": 6576,
+    "lines": 460
+  },
+  "accessibilitySnapshot": {
+    "lines": 530,
+    "headingLine": 112,
+    "firstProductLine": 115,
+    "linksBeforeHeading": 16,
+    "buttonsBeforeHeading": 28,
+    "linksAndButtonsBeforeHeading": 44,
+    "linksTotal": 67,
+    "buttonsTotal": 66
+  },
+  "dom": {
+    "linksBeforeHeading": 18,
+    "buttonsBeforeHeading": 34,
+    "linksAndButtonsBeforeHeading": 52,
+    "linksTotal": 69,
+    "buttonsTotal": 83,
+    "imagesTotal": 159,
+    "imagesWithoutAltAttribute": 0,
+    "imagesWithEmptyAlt": 96,
+    "imagesWithoutAltText": 96
+  },
+  "unitPrices": {
+    "total": 26,
+    "suspicious": [
+      {
+        "innerTextLine": 79,
+        "product": "ויטמינצ'יק טרופי",
+        "shelfPrice": 10,
+        "unitPriceText": "1075.76 ל-100 מל",
+        "unitPrice": 1075.76,
+        "suspicious": true
+      },
+      {
+        "innerTextLine": 126,
+        "product": "עגבניות חתוכות 400*3גרם",
+        "shelfPrice": 21.1,
+        "unitPriceText": "1758.33 ל-100 קג",
+        "unitPrice": 1758.33,
+        "suspicious": true
+      }
+    ],
+    "all": [
+      {
+        "innerTextLine": 51,
+        "product": "מטרנה סקוויז מחית תפוח מנגו גזר",
+        "shelfPrice": 5.4,
+        "unitPriceText": "6.00 ל-100 גרם",
+        "unitPrice": 6,
+        "suspicious": false
+      },
+      {
+        "innerTextLine": 65,
+        "product": "חומוס בתוספת טחינה 400 גרם",
+        "shelfPrice": 10,
+        "unitPriceText": "2.80 ל-100 גרם",
+        "unitPrice": 2.8,
+        "suspicious": false
+      },
+      {
+        "innerTextLine": 79,
+        "product": "ויטמינצ'יק טרופי",
+        "shelfPrice": 10,
+        "unitPriceText": "1075.76 ל-100 מל",
+        "unitPrice": 1075.76,
+        "suspicious": true
+      },
+      {
+        "innerTextLine": 90,
+        "product": "מגבות נייר 8 גלילים",
+        "shelfPrice": 15.9,
+        "unitPriceText": "0.19 ל-1 מטר",
+        "unitPrice": 0.19,
+        "suspicious": false
+      },
+      {
+        "innerTextLine": 104,
+        "product": "פסטרמה עגל רומני 120 גרם",
+        "shelfPrice": 10,
+        "unitPriceText": "14.00 ל-100 גרם",
+        "unitPrice": 14,
+        "suspicious": false
+      },
+      {
+        "innerTextLine": 115,
+        "product": "קסם הקינמון הגן הקסום",
+        "shelfPrice": 19.9,
+        "unitPriceText": "31.84 ל-100 גרם",
+        "unitPrice": 31.84,
+        "suspicious": false
+      },
+      {
+        "innerTextLine": 126,
+        "product": "עגבניות חתוכות 400*3גרם",
+        "shelfPrice": 21.1,
+        "unitPriceText": "1758.33 ל-100 קג",
+        "unitPrice": 1758.33,
+        "suspicious": true
+      },
+      {
+        "innerTextLine": 137,
+        "product": "גבינה צהובה חצי קשה",
+        "shelfPrice": 28.9,
+        "unitPriceText": "7.22 ל-100 גרם",
+        "unitPrice": 7.22,
+        "suspicious": false
+      },
+      {
+        "innerTextLine": 149,
+        "product": "גריזלי גריל",
+        "shelfPrice": 3.5,
+        "unitPriceText": "5.00 ל-100 גרם",
+        "unitPrice": 5,
+        "suspicious": false
+      },
+      {
+        "innerTextLine": 160,
+        "product": "פתיתים אפויים בצורת אורז",
+        "shelfPrice": 5,
+        "unitPriceText": "1.00 ל-100 גרם",
+        "unitPrice": 1,
+        "suspicious": false
+      },
+      {
+        "innerTextLine": 169,
+        "product": "פסטה איטלקית פוסילי",
+        "shelfPrice": 6,
+        "unitPriceText": "1.20 ל-100 גרם",
+        "unitPrice": 1.2,
+        "suspicious": false
+      },
+      {
+        "innerTextLine": 179,
+        "product": "נייר אפייה 42*37 ס\"מ (50יח) - רמי לוי",
+        "shelfPrice": 8.5,
+        "unitPriceText": "0.17 ל-1 יחידה",
+        "unitPrice": 0.17,
+        "suspicious": false
+      },
+      {
+        "innerTextLine": 188,
+        "product": "מגבות נייר 6 גלילים",
+        "shelfPrice": 11.8,
+        "unitPriceText": "0.19 ל-1 מטר",
+        "unitPrice": 0.19,
+        "suspicious": false
+      },
+      {
+        "innerTextLine": 199,
+        "product": "נתחי טונה בהירה במים",
+        "shelfPrice": 20.8,
+        "unitPriceText": "3.25 ל-100 גרם",
+        "unitPrice": 3.25,
+        "suspicious": false
+      },
+      {
+        "innerTextLine": 210,
+        "product": "נתחי טונה בהירה בשמן X4",
+        "shelfPrice": 20.8,
+        "unitPriceText": "3.25 ל-100 גרם",
+        "unitPrice": 3.25,
+        "suspicious": false
+      },
+      {
+        "innerTextLine": 258,
+        "product": "מחית תפוח עץ",
+        "shelfPrice": 4.4,
+        "unitPriceText": "4.89 ל-100 גרם",
+        "unitPrice": 4.89,
+        "suspicious": false
+      },
+      {
+        "innerTextLine": 267,
+        "product": "חיתולי רמי לוי 4",
+        "shelfPrice": 31.9,
+        "unitPriceText": "0.76 ל-1 יחידה",
+        "unitPrice": 0.76,
+        "suspicious": false
+      },
+      {
+        "innerTextLine": 278,
+        "product": "פרימיום מידה 2 39 יח",
+        "shelfPrice": 34.9,
+        "unitPriceText": "0.89 ל-1 יחידה",
+        "unitPrice": 0.89,
+        "suspicious": false
+      },
+      {
+        "innerTextLine": 289,
+        "product": "האגיס פרידום דריי שלב 5",
+        "shelfPrice": 42.9,
+        "unitPriceText": "1.43 ל-1 יחידה",
+        "unitPrice": 1.43,
+        "suspicious": false
+      },
+      {
+        "innerTextLine": 300,
+        "product": "נוטרילון 3- 800 גרם",
+        "shelfPrice": 59.9,
+        "unitPriceText": "7.49 ל-100 גרם",
+        "unitPrice": 7.49,
+        "suspicious": false
+      },
+      {
+        "innerTextLine": 310,
+        "product": "גרעיני תירס מתוק",
+        "shelfPrice": 4.8,
+        "unitPriceText": "1.68 ל-100 גרם",
+        "unitPrice": 1.68,
+        "suspicious": false
+      },
+      {
+        "innerTextLine": 319,
+        "product": "פטריות שמפניון חתוכות",
+        "shelfPrice": 4.9,
+        "unitPriceText": "2.13 ל-100 גרם",
+        "unitPrice": 2.13,
+        "suspicious": false
+      },
+      {
+        "innerTextLine": 328,
+        "product": "תחליב רחצה פינוק קלאסי",
+        "shelfPrice": 10.5,
+        "unitPriceText": "1.50 ל-100 מל",
+        "unitPrice": 1.5,
+        "suspicious": false
+      },
+      {
+        "innerTextLine": 337,
+        "product": "חמצוצים שטיח בטעם פירות יער 115 גר",
+        "shelfPrice": 13.9,
+        "unitPriceText": "12.09 ל-100 גרם",
+        "unitPrice": 12.09,
+        "suspicious": false
+      },
+      {
+        "innerTextLine": 346,
+        "product": "מאגדת מעדן וניל",
+        "shelfPrice": 15.1,
+        "unitPriceText": "1.89 ל-100 גרם",
+        "unitPrice": 1.89,
+        "suspicious": false
+      },
+      {
+        "innerTextLine": 355,
+        "product": "תה נענע",
+        "shelfPrice": 16.3,
+        "unitPriceText": "38.35 ל-100 גרם",
+        "unitPrice": 38.35,
+        "suspicious": false
+      }
+    ]
+  }
+}

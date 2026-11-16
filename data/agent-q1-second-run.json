@@ -1,0 +1,57 @@
+{
+  "provider": "Google Gemini API",
+  "requestedModel": "gemini-3.5-flash",
+  "systemPrompt": null,
+  "generationConfig": null,
+  "messageFormat": "one user message: full data/innerText.txt, blank line, then the question",
+  "question": "מה הדבר הכי חשוב בדף הזה?",
+  "answer": "הדבר המרכזי והחשוב ביותר בדף הזה הוא **חנות הקניות אונליין של \"רמי לוי שיווק השקמה\"**, ובפרט **המבצעים וההנחות** על המוצרים.\n\nאם מסכמים את התוכן החשוב ביותר בדף:\n\n1. **מבצעים והנחות (החלק הבולט ביותר):** הדף מציג מגוון רחב של מבצעי כמות (\"2 ב-10 ₪\", \"3 ב-100 ₪\", \"2 ב-35 ₪\") על מוצרי מזון, פאקאג'ינג, פארם ותינוקות, ובשר/דגים.\n2. **מוצרי המותג הפרטי:** קידום מוצרים של \"רמי לוי\" במחירים מוזלים (כמו טונה, נייר אפייה, חיתולים וכדומה).\n3. **סל קניות ואפשרות הזמנה:** מערכת המאפשרת להוסיף מוצרים לסל ולעבור לתשלום/משלוח.\n4. **שירותי הקבוצה הנוספים:** הצעה להצטרף לכרטיס האשראי של רמי לוי, \"רמי לוי תקשורת\" (סלולר) ו\"רמי לוי ביטוח\".\n\n**בשורה אחת:** הדף משמש כעמוד הבית לקניות בסופרמרקט של רמי לוי באינטרנט, והדגש העיקרי בו הוא מציאת **המבצעים הכדאיים ביותר**.",
+  "model": "gemini-3.6-flash",
+  "stopReason": "STOP",
+  "usage": {
+    "promptTokenCount": 3906,
+    "candidatesTokenCount": 370,
+    "totalTokenCount": 5156,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3906
+      }
+    ],
+    "thoughtsTokenCount": 880,
+    "serviceTier": "standard"
+  },
+  "askedAt": "2026-11-16T08:15:25.542Z",
+  "rawResponse": {
+    "candidates": [
+      {
+        "content": {
+          "parts": [
+            {
+              "text": "הדבר המרכזי והחשוב ביותר בדף הזה הוא **חנות הקניות אונליין של \"רמי לוי שיווק השקמה\"**, ובפרט **המבצעים וההנחות** על המוצרים.\n\nאם מסכמים את התוכן החשוב ביותר בדף:\n\n1. **מבצעים והנחות (החלק הבולט ביותר):** הדף מציג מגוון רחב של מבצעי כמות (\"2 ב-10 ₪\", \"3 ב-100 ₪\", \"2 ב-35 ₪\") על מוצרי מזון, פאקאג'ינג, פארם ותינוקות, ובשר/דגים.\n2. **מוצרי המותג הפרטי:** קידום מוצרים של \"רמי לוי\" במחירים מוזלים (כמו טונה, נייר אפייה, חיתולים וכדומה).\n3. **סל קניות ואפשרות הזמנה:** מערכת המאפשרת להוסיף מוצרים לסל ולעבור לתשלום/משלוח.\n4. **שירותי הקבוצה הנוספים:** הצעה להצטרף לכרטיס האשראי של רמי לוי, \"רמי לוי תקשורת\" (סלולר) ו\"רמי לוי ביטוח\".\n\n**בשורה אחת:** הדף משמש כעמוד הבית לקניות בסופרמרקט של רמי לוי באינטרנט, והדגש העיקרי בו הוא מציאת **המבצעים הכדאיים ביותר**.",
+              "thoughtSignature": "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"
+            }
+          ],
+          "role": "model"
+        },
+        "finishReason": "STOP",
+        "index": 0
+      }
+    ],
+    "usageMetadata": {
+      "promptTokenCount": 3906,
+      "candidatesTokenCount": 370,
+      "totalTokenCount": 5156,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 3906
+        }
+      ],
+      "thoughtsTokenCount": 880,
+      "serviceTier": "standard"
+    },
+    "modelVersion": "gemini-3.6-flash",
+    "responseId": "l7v6auPvDOikkdUP7r29kQc"
+  }
+}

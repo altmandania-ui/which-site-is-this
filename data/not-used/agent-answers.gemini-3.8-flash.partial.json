@@ -1,0 +1,54 @@
+[
+  {
+    "question": "מה הדבר הכי חשוב בדף הזה?",
+    "answer": "הדבר הכי חשוב בדף הזה (שהוא דף הבית של אתר **רמי לוי אונליין**) הוא **המבצעים השבועיים וההנחות**, שנועדו למשוך את הקונה להתחיל קנייה:\n\n1. **מבצעי כמות ומחירים מוזלים (\"מבצעים שבועיים\"):**\n   * מוצרים ב-10 ₪ (חומוס שטראוס, ויטמינצ'יק, פסטרמה טירת צבי).\n   * מבצעי כמות (מחיות מטרנה 2 ב-10 ₪, מגבות נייר 2 ב-25 ₪, תה ויסוצקי 2 ב-30 ₪).\n2. **קידום המותג הפרטי של רמי לוי (\"הסל הזול במדינה\"):**\n   * מוצרי בסיס זולים כמו פתיתים, פסטה, נייר אפייה וטונה תחת המותג של הרשת.\n3. **הנחות על מוצרי פארם ותינוקות:**\n   * מבצעים על חיתולי פמפרס/האגיס ותרכובות מזון לתינוקות (נוטרילון).\n4. **הטבות למחזיקי כרטיס אשראי רמי לוי.**\n\n---\n💡 **אם נכנסת כדי ליצור קשר עם שירות הלקוחות**, המידע החשוב עבורך נמצא בתחתית:\n* **וואטסאפ שירות אונליין:** 055-688-8800\n* **טלפון שירות אונליין:** 073-284-0000",
+    "model": "gemini-3.8-flash",
+    "stopReason": "STOP",
+    "usage": {
+      "promptTokenCount": 3906,
+      "candidatesTokenCount": 408,
+      "totalTokenCount": 5152,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 3906
+        }
+      ],
+      "thoughtsTokenCount": 838,
+      "serviceTier": "standard"
+    },
+    "askedAt": "2026-11-16T07:41:13.669Z",
+    "rawResponse": {
+      "candidates": [
+        {
+          "content": {
+            "parts": [
+              {
+                "text": "הדבר הכי חשוב בדף הזה (שהוא דף הבית של אתר **רמי לוי אונליין**) הוא **המבצעים השבועיים וההנחות**, שנועדו למשוך את הקונה להתחיל קנייה:\n\n1. **מבצעי כמות ומחירים מוזלים (\"מבצעים שבועיים\"):**\n   * מוצרים ב-10 ₪ (חומוס שטראוס, ויטמינצ'יק, פסטרמה טירת צבי).\n   * מבצעי כמות (מחיות מטרנה 2 ב-10 ₪, מגבות נייר 2 ב-25 ₪, תה ויסוצקי 2 ב-30 ₪).\n2. **קידום המותג הפרטי של רמי לוי (\"הסל הזול במדינה\"):**\n   * מוצרי בסיס זולים כמו פתיתים, פסטה, נייר אפייה וטונה תחת המותג של הרשת.\n3. **הנחות על מוצרי פארם ותינוקות:**\n   * מבצעים על חיתולי פמפרס/האגיס ותרכובות מזון לתינוקות (נוטרילון).\n4. **הטבות למחזיקי כרטיס אשראי רמי לוי.**\n\n---\n💡 **אם נכנסת כדי ליצור קשר עם שירות הלקוחות**, המידע החשוב עבורך נמצא בתחתית:\n* **וואטסאפ שירות אונליין:** 055-688-8800\n* **טלפון שירות אונליין:** 073-284-0000",
+                "thoughtSignature": "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"
+              }
+            ],
+            "role": "model"
+          },
+          "finishReason": "STOP",
+          "index": 0
+        }
+      ],
+      "usageMetadata": {
+        "promptTokenCount": 3906,
+        "candidatesTokenCount": 408,
+        "totalTokenCount": 5152,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3906
+          }
+        ],
+        "thoughtsTokenCount": 838,
+        "serviceTier": "standard"
+      },
+      "modelVersion": "gemini-3.8-flash",
+      "responseId": "aLP6au7kMbSzkdUPm9ycwAk"
+    }
+  }
+]

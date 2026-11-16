@@ -1,0 +1,487 @@
+{
+  "provider": "Google Gemini API",
+  "requestedModel": "gemini-3.5-flash",
+  "systemPrompt": null,
+  "generationConfig": null,
+  "messageFormat": "one user message: full data/innerText.txt, blank line, then the question",
+  "runsEach": 3,
+  "answers": [
+    {
+      "run": 1,
+      "question": "יש לי אלרגיה לשומשום. אילו מהמוצרים במבצע בטוחים לי?",
+      "answer": "**אזהרה חשובה לפני הכל:** \nאני מערכת בינה מלאכותית ואינני תחליף לבדיקה רפואית או לקריאת הרכיבים על גבי האריזה. **חובה לבדוק את גב האריזה של כל מוצר** (תחת \"מידע על אלרגנים\" / \"מכיל\" / \"עלול להכיל\") לפני הצריכה, שכן רכיבים ואזהרות אלרגנים עשויים להשתנות.\n\n---\n\nלהלן ניתוח של המוצרים במבצע שהופיעו ברשימה שלך מבחינת סיכון לשומשום:\n\n### ❌ מוצר שבוודאות אינו בטוח (מכיל שומשום):\n* **שטראוס חומוס בתוספת טחינה 400 גרם** – טחינה עשויה 100% שומשום.\n\n---\n\n### ⚠️ מוצרים שדורשים בדיקה קפדנית של האריזה (סיכון ל\"עלול להכיל\" או תבלינים):\nמוצרים מעובדים, חטיפים ותבלינים עלולים להכיל שומשום או להיוצר בקו ייצור שבא במגע עם שומשום:\n* **רמי לוי שיווק השקמה גריזלי גריל** (חטיף/תבלין - חטיפים ותבלינים מכילים לעיתים קרובות שומשום או אזהרת \"עלול להכיל\").\n* **טיב טירת צבי פסטרמה עגל רומני** (מוצרי בשר מעובד ותערובות תבלינים מכילים לעיתים שומשום או עקבות שומשום).\n* **חמצוצים שטיח בטעם פירות יער** (מפעלים של ממתקים עלולים לעבוד עם אלרגנים שונים).\n* **פתיתים אפויים / פסטה איטלקית** (בדרך כלל מדובר בחיטה בלבד, אך יש לבדוק אזהרת \"עלול להכיל\" במפעל).\n\n---\n\n### ✅ מוצרים בסבירות גבוהה מאוד שבטוחים (מוצרי גלם, ללא מעובדים):\n*(עדיין מומלץ לוודא בגב האריזה)*\n\n* **בשר ודגים טריים (ללא תיבול):**\n  * כנפיים / ירכיים / כבד עוף טרי\n  * פילה בורי / פילה אמנון טרי\n* **מחיות פירות וירקות משומרים:**\n  * מטרנה סקוויז מחית תפוח מנגו גזר\n  * רמי לוי מחית תפוח עץ\n  * Bella Italia עגבניות חתוכות\n  * רמי לוי גרעיני תירס מתוק / פטריות שמפניון חתוכות\n* **מוצרי חלב בסיסיים:**\n  * עמק גבינה צהובה\n  * טרה מאגדת מעדן וניל\n* **שימורים ומשקאות:**\n  * רמי לוי נתחי טונה בהירה במים / בשמן (לוודא שסוג השמן אינו שמן שומשום - בדרך כלל מדובר בשמן צמחי/סויה/חמניות)\n  * עסיס ויטמינצ'יק טרופי\n  * תה ויסוצקי (נענע / קסם הקינמון)\n\n---\n\n### 🧴 מוצרים שאינם מזון (בטוחים לחלוטין לשימוש מבחינת אכילה):\n* נייר אפייה, מגבות נייר, חיתולים (פמפרס/האגיס/רמי לוי), תחליב רחצה פינוק.",
+      "model": "gemini-3.6-flash",
+      "stopReason": "STOP",
+      "usage": {
+        "promptTokenCount": 3919,
+        "candidatesTokenCount": 901,
+        "totalTokenCount": 6472,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3919
+          }
+        ],
+        "thoughtsTokenCount": 1652,
+        "serviceTier": "standard"
+      },
+      "askedAt": "2026-11-16T08:36:14.747Z",
+      "rawResponse": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "**אזהרה חשובה לפני הכל:** \nאני מערכת בינה מלאכותית ואינני תחליף לבדיקה רפואית או לקריאת הרכיבים על גבי האריזה. **חובה לבדוק את גב האריזה של כל מוצר** (תחת \"מידע על אלרגנים\" / \"מכיל\" / \"עלול להכיל\") לפני הצריכה, שכן רכיבים ואזהרות אלרגנים עשויים להשתנות.\n\n---\n\nלהלן ניתוח של המוצרים במבצע שהופיעו ברשימה שלך מבחינת סיכון לשומשום:\n\n### ❌ מוצר שבוודאות אינו בטוח (מכיל שומשום):\n* **שטראוס חומוס בתוספת טחינה 400 גרם** – טחינה עשויה 100% שומשום.\n\n---\n\n### ⚠️ מוצרים שדורשים בדיקה קפדנית של האריזה (סיכון ל\"עלול להכיל\" או תבלינים):\nמוצרים מעובדים, חטיפים ותבלינים עלולים להכיל שומשום או להיוצר בקו ייצור שבא במגע עם שומשום:\n* **רמי לוי שיווק השקמה גריזלי גריל** (חטיף/תבלין - חטיפים ותבלינים מכילים לעיתים קרובות שומשום או אזהרת \"עלול להכיל\").\n* **טיב טירת צבי פסטרמה עגל רומני** (מוצרי בשר מעובד ותערובות תבלינים מכילים לעיתים שומשום או עקבות שומשום).\n* **חמצוצים שטיח בטעם פירות יער** (מפעלים של ממתקים עלולים לעבוד עם אלרגנים שונים).\n* **פתיתים אפויים / פסטה איטלקית** (בדרך כלל מדובר בחיטה בלבד, אך יש לבדוק אזהרת \"עלול להכיל\" במפעל).\n\n---\n\n### ✅ מוצרים בסבירות גבוהה מאוד שבטוחים (מוצרי גלם, ללא מעובדים):\n*(עדיין מומלץ לוודא בגב האריזה)*\n\n* **בשר ודגים טריים (ללא תיבול):**\n  * כנפיים / ירכיים / כבד עוף טרי\n  * פילה בורי / פילה אמנון טרי\n* **מחיות פירות וירקות משומרים:**\n  * מטרנה סקוויז מחית תפוח מנגו גזר\n  * רמי לוי מחית תפוח עץ\n  * Bella Italia עגבניות חתוכות\n  * רמי לוי גרעיני תירס מתוק / פטריות שמפניון חתוכות\n* **מוצרי חלב בסיסיים:**\n  * עמק גבינה צהובה\n  * טרה מאגדת מעדן וניל\n* **שימורים ומשקאות:**\n  * רמי לוי נתחי טונה בהירה במים / בשמן (לוודא שסוג השמן אינו שמן שומשום - בדרך כלל מדובר בשמן צמחי/סויה/חמניות)\n  * עסיס ויטמינצ'יק טרופי\n  * תה ויסוצקי (נענע / קסם הקינמון)\n\n---\n\n### 🧴 מוצרים שאינם מזון (בטוחים לחלוטין לשימוש מבחינת אכילה):\n* נייר אפייה, מגבות נייר, חיתולים (פמפרס/האגיס/רמי לוי), תחליב רחצה פינוק.",
+                  "thoughtSignature": "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"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 3919,
+          "candidatesTokenCount": 901,
+          "totalTokenCount": 6472,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 3919
+            }
+          ],
+          "thoughtsTokenCount": 1652,
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-3.6-flash",
+        "responseId": "dMD6aoikHJ_OvdIPrrnRuAc"
+      }
+    },
+    {
+      "run": 2,
+      "question": "יש לי אלרגיה לשומשום. אילו מהמוצרים במבצע בטוחים לי?",
+      "answer": "**אזהרה חשובה למעשה:** כמודל בינה מלאכותית, אינני יכול לראות את האריזה הפיזית או את רשימת האלרגנים המעודכנת על המוצרים (\"מכיל שומשום\" או \"עלול להכיל שומשום\"). **חובה לבדוק תמיד את הרכיבים והאזהרות על גבי האריזה עצמה לפני הצריכה.**\n\nעל פי המידע וסוגי המוצרים שמופיעים ברשימה שהעלית, הנה חלוקה לפי רמת הסיכון:\n\n---\n\n### ❌ מוצר שאינו בטוח (מכיל שומשום בוודאות):\n* **חומוס בתוספת טחינה (שטראוס):** טחינה עשויה מ-100% שומשום, ולכן מוצר זה **מסוכן מאוד** לסובלים מאלרגיה לשומשום.\n\n---\n\n### ⚠️ מוצרים שדורשים בדיקת אריזה קפדנית (חשש לאלרגנים/זיהום צולב):\n* **גריזלי גריל (רמי לוי):** תערובות תבלינים או חטיפי תיבול עשויים לעיתים להכיל שומשום או להארז במפעלים המעבדים שומשום (\"עלול להכיל\").\n* **פסטרמה עגל רומני (טירת צבי):** מוצרי בשר מעובד מכילים לעיתים תבלינים או מיוצרים בסביבה שעלולה להכיל שומשום.\n* **פתיתים אפויים / פסטה / נייר אפייה / חטיפי חמצוצים:** בדרך כלל בטוחים, אך במוצרי מאפה ודגנים מומלץ לוודא שאין אזהרת \"עלול להכיל שומשום\".\n\n---\n\n### ✅ מוצרים שנחשבים בדרך כלל בטוחים (בכפוף לבדיקת תוית):\n\n**מוצרי טריים (דגים ועופות):**\n* כנפיים / ירכיים / כבד עוף טרי\n* פילה בורי / פילה אמנון טרי\n\n**מוצרי תינוקות ומחיות:**\n* מטרנה סקוויז (תפוח, מנגו, גזר)\n* מחית תפוח עץ (רמי לוי)\n\n**שימורים ומוצרי מדף:**\n* נתחי טונה בהירה (במים / בשמן)\n* עגבניות חתוכות Bella Italia\n* גרעיני תירס מתוק\n* פטריות שמפניון חתוכות\n\n**חלב ומוצריו:**\n* גבינה צהובה עמק\n* מאגדת מעדן וניל (טרה)\n\n**משקאות:**\n* ויטמינצ'יק טרופי\n* תה ויסוצקי (קסם הקינמון / נענע)\n\n---\n*הערה: מוצרים שאינם למאכל (כמו מגבות נייר או חיתולים) בטוחים לשימוש.*",
+      "model": "gemini-3.6-flash",
+      "stopReason": "STOP",
+      "usage": {
+        "promptTokenCount": 3919,
+        "candidatesTokenCount": 743,
+        "totalTokenCount": 6510,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3919
+          }
+        ],
+        "thoughtsTokenCount": 1848,
+        "serviceTier": "standard"
+      },
+      "askedAt": "2026-11-16T08:36:25.843Z",
+      "rawResponse": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "**אזהרה חשובה למעשה:** כמודל בינה מלאכותית, אינני יכול לראות את האריזה הפיזית או את רשימת האלרגנים המעודכנת על המוצרים (\"מכיל שומשום\" או \"עלול להכיל שומשום\"). **חובה לבדוק תמיד את הרכיבים והאזהרות על גבי האריזה עצמה לפני הצריכה.**\n\nעל פי המידע וסוגי המוצרים שמופיעים ברשימה שהעלית, הנה חלוקה לפי רמת הסיכון:\n\n---\n\n### ❌ מוצר שאינו בטוח (מכיל שומשום בוודאות):\n* **חומוס בתוספת טחינה (שטראוס):** טחינה עשויה מ-100% שומשום, ולכן מוצר זה **מסוכן מאוד** לסובלים מאלרגיה לשומשום.\n\n---\n\n### ⚠️ מוצרים שדורשים בדיקת אריזה קפדנית (חשש לאלרגנים/זיהום צולב):\n* **גריזלי גריל (רמי לוי):** תערובות תבלינים או חטיפי תיבול עשויים לעיתים להכיל שומשום או להארז במפעלים המעבדים שומשום (\"עלול להכיל\").\n* **פסטרמה עגל רומני (טירת צבי):** מוצרי בשר מעובד מכילים לעיתים תבלינים או מיוצרים בסביבה שעלולה להכיל שומשום.\n* **פתיתים אפויים / פסטה / נייר אפייה / חטיפי חמצוצים:** בדרך כלל בטוחים, אך במוצרי מאפה ודגנים מומלץ לוודא שאין אזהרת \"עלול להכיל שומשום\".\n\n---\n\n### ✅ מוצרים שנחשבים בדרך כלל בטוחים (בכפוף לבדיקת תוית):\n\n**מוצרי טריים (דגים ועופות):**\n* כנפיים / ירכיים / כבד עוף טרי\n* פילה בורי / פילה אמנון טרי\n\n**מוצרי תינוקות ומחיות:**\n* מטרנה סקוויז (תפוח, מנגו, גזר)\n* מחית תפוח עץ (רמי לוי)\n\n**שימורים ומוצרי מדף:**\n* נתחי טונה בהירה (במים / בשמן)\n* עגבניות חתוכות Bella Italia\n* גרעיני תירס מתוק\n* פטריות שמפניון חתוכות\n\n**חלב ומוצריו:**\n* גבינה צהובה עמק\n* מאגדת מעדן וניל (טרה)\n\n**משקאות:**\n* ויטמינצ'יק טרופי\n* תה ויסוצקי (קסם הקינמון / נענע)\n\n---\n*הערה: מוצרים שאינם למאכל (כמו מגבות נייר או חיתולים) בטוחים לשימוש.*",
+                  "thoughtSignature": "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"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 3919,
+          "candidatesTokenCount": 743,
+          "totalTokenCount": 6510,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 3919
+            }
+          ],
+          "thoughtsTokenCount": 1848,
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-3.6-flash",
+        "responseId": "f8D6ap3dDPX_vdIP9bXFoQM"
+      }
+    },
+    {
+      "run": 3,
+      "question": "יש לי אלרגיה לשומשום. אילו מהמוצרים במבצע בטוחים לי?",
+      "answer": "**אזהרה חשובה למען בטיחותך:**\nאלרגיה לשומשום עשויה להיות מסכנת חיים. היות ורכיבים ואזהרות אלרגנים עשויים להשתנות בין אצוות ייצור או בגלל קווי ייצור משותפים, **חובה לבדוק את גב האריזה של כל מוצר לפני הצריכה** (תחת הסעיף \"מידע על אלרגנים\").\n\nלהלן ניתוח של המוצרים שהופיעו ברשימה לפי רמת הסיכון לאלרגיה לשומשום:\n\n---\n\n### ❌ מוצרים **מסוכנים לשימוש** (מכילים שומשום בוודאות):\n* **שטראוס - חומוס בתוספת טחינה:** **אסור לחלוטין!** טחינה עשויה מגרעיני שומשום.\n\n---\n\n### ⚠️ מוצרים המחייבים בדיקה קפדנית של האריזה (חשש ל-\"עלול להכיל\"):\nמוצרים מעובדים, חטיפים, מאפים ובשר מעובד עלולים להכיל שומשום או להיווצר בקו ייצור המעבד שומשום:\n* **רמי לוי - גריזלי גריל** (חטיפים מלוחים/אפויים נוטים להיות בעלי אזהרת \"עלול להכיל שומשום\").\n* **טיב טירת צבי - פסטרמה עגל רומני** (בשר מעובד מכיל תערובות תבלינים ולעיתים מיוצר בסביבת אלרגנים).\n* **פתיתים אפויים / פסטה איטלקית פוסילי** (מוצרי דגנים יבשים דורשים בדיקת \"עלול להכיל\").\n* **נתחי טונה בהירה בשמן / במים** (לוודא שסוג השמן אינו מכיל שמן שומשום ושאין אזהרת אלרגנים).\n\n---\n\n### ✔️ מוצרים שבעלי סבירות גבוהה מאוד להיות בטוחים:\n*(עדיין מומלץ להעיף מבט מהיר על הרכיבים בגב המוצר)*\n\n**1. מוצרים טריים שלא עברו עיבוד (חומרי גלם):**\n* **עוף טרי:** כנפיים, ירכיים, כבד עוף טרי.\n* **דגים טריים:** פילה בורי, פילה אמנון.\n\n**2. מוצרי חלב ומטרנה:**\n* **עמק** - גבינה צהובה חצי קשה.\n* **טרה** - מאגדת מעדן וניל.\n* **נוטרילון 3**.\n\n**3. מחיות פרי, שימורים ומוצרי מדף בסיסיים:**\n* **מטרנה סקוויז** (מחית תפוח מנגו גזר) / **רמי לוי** (מחית תפוח עץ).\n* **Bella Italia** - עגבניות חתוכות.\n* **רמי לוי** - גרעיני תירס מתוק / פטריות שמפניון חתוכות.\n* **חמצוצים** (שטיח בטעם פירות יער).\n\n**4. משקאות ותה:**\n* **עסיס** - ויטמינצ'יק טרופי.\n* **תה ויסוצקי** - נענע / קסם הקינמון.\n\n---\n\n### 💡 כלל ברזל לקנייה:\nלפני הלעיסה/הבישול, חפש/י בגב האריזה את המילים:\n* ❌ **\"מכיל: שומשום\"**\n* ❌ **\"עלול להכיל: שומשום\"**\nאם אחת מהשורות הללו מופיעה – **אין לצרוך את המוצר.**",
+      "model": "gemini-3.6-flash",
+      "stopReason": "STOP",
+      "usage": {
+        "promptTokenCount": 3919,
+        "candidatesTokenCount": 914,
+        "totalTokenCount": 6975,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3919
+          }
+        ],
+        "thoughtsTokenCount": 2142,
+        "serviceTier": "standard"
+      },
+      "askedAt": "2026-11-16T08:36:38.160Z",
+      "rawResponse": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "**אזהרה חשובה למען בטיחותך:**\nאלרגיה לשומשום עשויה להיות מסכנת חיים. היות ורכיבים ואזהרות אלרגנים עשויים להשתנות בין אצוות ייצור או בגלל קווי ייצור משותפים, **חובה לבדוק את גב האריזה של כל מוצר לפני הצריכה** (תחת הסעיף \"מידע על אלרגנים\").\n\nלהלן ניתוח של המוצרים שהופיעו ברשימה לפי רמת הסיכון לאלרגיה לשומשום:\n\n---\n\n### ❌ מוצרים **מסוכנים לשימוש** (מכילים שומשום בוודאות):\n* **שטראוס - חומוס בתוספת טחינה:** **אסור לחלוטין!** טחינה עשויה מגרעיני שומשום.\n\n---\n\n### ⚠️ מוצרים המחייבים בדיקה קפדנית של האריזה (חשש ל-\"עלול להכיל\"):\nמוצרים מעובדים, חטיפים, מאפים ובשר מעובד עלולים להכיל שומשום או להיווצר בקו ייצור המעבד שומשום:\n* **רמי לוי - גריזלי גריל** (חטיפים מלוחים/אפויים נוטים להיות בעלי אזהרת \"עלול להכיל שומשום\").\n* **טיב טירת צבי - פסטרמה עגל רומני** (בשר מעובד מכיל תערובות תבלינים ולעיתים מיוצר בסביבת אלרגנים).\n* **פתיתים אפויים / פסטה איטלקית פוסילי** (מוצרי דגנים יבשים דורשים בדיקת \"עלול להכיל\").\n* **נתחי טונה בהירה בשמן / במים** (לוודא שסוג השמן אינו מכיל שמן שומשום ושאין אזהרת אלרגנים).\n\n---\n\n### ✔️ מוצרים שבעלי סבירות גבוהה מאוד להיות בטוחים:\n*(עדיין מומלץ להעיף מבט מהיר על הרכיבים בגב המוצר)*\n\n**1. מוצרים טריים שלא עברו עיבוד (חומרי גלם):**\n* **עוף טרי:** כנפיים, ירכיים, כבד עוף טרי.\n* **דגים טריים:** פילה בורי, פילה אמנון.\n\n**2. מוצרי חלב ומטרנה:**\n* **עמק** - גבינה צהובה חצי קשה.\n* **טרה** - מאגדת מעדן וניל.\n* **נוטרילון 3**.\n\n**3. מחיות פרי, שימורים ומוצרי מדף בסיסיים:**\n* **מטרנה סקוויז** (מחית תפוח מנגו גזר) / **רמי לוי** (מחית תפוח עץ).\n* **Bella Italia** - עגבניות חתוכות.\n* **רמי לוי** - גרעיני תירס מתוק / פטריות שמפניון חתוכות.\n* **חמצוצים** (שטיח בטעם פירות יער).\n\n**4. משקאות ותה:**\n* **עסיס** - ויטמינצ'יק טרופי.\n* **תה ויסוצקי** - נענע / קסם הקינמון.\n\n---\n\n### 💡 כלל ברזל לקנייה:\nלפני הלעיסה/הבישול, חפש/י בגב האריזה את המילים:\n* ❌ **\"מכיל: שומשום\"**\n* ❌ **\"עלול להכיל: שומשום\"**\nאם אחת מהשורות הללו מופיעה – **אין לצרוך את המוצר.**",
+                  "thoughtSignature": "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"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 3919,
+          "candidatesTokenCount": 914,
+          "totalTokenCount": 6975,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 3919
+            }
+          ],
+          "thoughtsTokenCount": 2142,
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-3.6-flash",
+        "responseId": "isD6asnuEZSR3boPxZK1-Qk"
+      }
+    },
+    {
+      "run": 1,
+      "question": "כמה עולה הויטמינצ'יק ל-100 מ\"ל?",
+      "answer": "על פי הנתונים בטקסט שצורף, המחיר המופיע ל-100 מ\"ל של ויטמינצ'יק טרופי הוא **1075.76 ₪** (ככל הנראה מדובר בטעות הקלדה במערכת של האתר, שכן מחיר הבקבוק כולו במבצע הוא 10.00 ₪).",
+      "model": "gemini-3.6-flash",
+      "stopReason": "STOP",
+      "usage": {
+        "promptTokenCount": 3917,
+        "candidatesTokenCount": 94,
+        "totalTokenCount": 4636,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3917
+          }
+        ],
+        "thoughtsTokenCount": 625,
+        "serviceTier": "standard"
+      },
+      "askedAt": "2026-11-16T08:36:42.085Z",
+      "rawResponse": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "על פי הנתונים בטקסט שצורף, המחיר המופיע ל-100 מ\"ל של ויטמינצ'יק טרופי הוא **1075.76 ₪** (ככל הנראה מדובר בטעות הקלדה במערכת של האתר, שכן מחיר הבקבוק כולו במבצע הוא 10.00 ₪).",
+                  "thoughtSignature": "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"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 3917,
+          "candidatesTokenCount": 94,
+          "totalTokenCount": 4636,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 3917
+            }
+          ],
+          "thoughtsTokenCount": 625,
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-3.6-flash",
+        "responseId": "lsD6aoSnJuWS3boP6vDguAk"
+      }
+    },
+    {
+      "run": 2,
+      "question": "כמה עולה הויטמינצ'יק ל-100 מ\"ל?",
+      "answer": "על פי הנתונים המופיעים בטקסט, המחיר המוצג ל-100 מ\"ל של **ויטמינצ'יק טרופי (עסיס)** הוא **1075.76 ₪** (מדובר בשגיאת חישוב/הקלדה באתר המוצג). \n\nלשם ההשוואה, מחיר הבקבוק עצמו במבצע הוא **10.00 ₪** (או 14.20 ₪ מחיר רגיל).",
+      "model": "gemini-3.6-flash",
+      "stopReason": "STOP",
+      "usage": {
+        "promptTokenCount": 3917,
+        "candidatesTokenCount": 120,
+        "totalTokenCount": 4859,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3917
+          }
+        ],
+        "thoughtsTokenCount": 822,
+        "serviceTier": "standard"
+      },
+      "askedAt": "2026-11-16T08:36:46.420Z",
+      "rawResponse": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "על פי הנתונים המופיעים בטקסט, המחיר המוצג ל-100 מ\"ל של **ויטמינצ'יק טרופי (עסיס)** הוא **1075.76 ₪** (מדובר בשגיאת חישוב/הקלדה באתר המוצג). \n\nלשם ההשוואה, מחיר הבקבוק עצמו במבצע הוא **10.00 ₪** (או 14.20 ₪ מחיר רגיל).",
+                  "thoughtSignature": "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"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 3917,
+          "candidatesTokenCount": 120,
+          "totalTokenCount": 4859,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 3917
+            }
+          ],
+          "thoughtsTokenCount": 822,
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-3.6-flash",
+        "responseId": "msD6auG6I7Tsxs0P6dKz0AU"
+      }
+    },
+    {
+      "run": 3,
+      "question": "כמה עולה הויטמינצ'יק ל-100 מ\"ל?",
+      "answer": "על פי הנתונים המופיעים בטקסט, המחיר המוצג עבור ויטמינצ'יק ל-100 מ\"ל הוא **1075.76 ש\"ח** (ככל הנראה מדובר בשגיאת נתונים במקור של האתר, אך זהו הנתון הרשום).",
+      "model": "gemini-3.6-flash",
+      "stopReason": "STOP",
+      "usage": {
+        "promptTokenCount": 3917,
+        "candidatesTokenCount": 78,
+        "totalTokenCount": 4694,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3917
+          }
+        ],
+        "thoughtsTokenCount": 699,
+        "serviceTier": "standard"
+      },
+      "askedAt": "2026-11-16T08:36:50.846Z",
+      "rawResponse": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "על פי הנתונים המופיעים בטקסט, המחיר המוצג עבור ויטמינצ'יק ל-100 מ\"ל הוא **1075.76 ש\"ח** (ככל הנראה מדובר בשגיאת נתונים במקור של האתר, אך זהו הנתון הרשום).",
+                  "thoughtSignature": "EoQSCoESAWkUfRPXF961MGZtT8wLK91jH3cGwv/OaPzJIRHM8jGiL81ZGm7zA2Xv7TAA1Kli2wYGTbuyVheqjay7NGS8LeYJD2ECqwmiZhrI2VtfzW31MmN4kRyJ0caBDjGM3oFKMN8K03AADJrQ0K2cRSF4C2wMrVyL1rCVfDPDVmbOVQd/aElghHS3P2CgGFaTSL12MIurfdCukVUlNBxhz9TLfd1Mf7Xp3JDfFK2TrY+RUeuj15+vcKC5RJqSEJkwKna/gl3FCIi4Lymsp7YqNg2PSG3nZ/to3yFSxCdnZhHpF3OG31AbT12oE3nNX9adphgO54aF9QQ5MryM/HeNI6vkK8RhMMCQv702MceCyKPNA/lFAvpcw995YxMzuH8CkKKG2hsl2ewl9XcdqwNpIOmrxa/8RHZiTiNbaR/dWOUACE48Yh9wbOcF+a/cIxbzjD3swEoRpXvOXyQc6JB3phVH2PMfFPNNmGUfrFF8B8GUGkz8zUeqco55m5xJ9X1S1qB//QNY4G9dIQ0Qz4TJpTojcotNjr3KsPawP1vndgsfYLXcbFC1i69Uw8i8DZhp0jTUz7i+K+A05EK2ltmDF96Bq/onYcHWCpHBV3RUxdZtIZU/jn07DL05YS7ii7fGd/yb9rUdeh43u7EtsBFBVCp4+eghg18flqVJ04eyYJle0rCN7/TNo+YW/Kq7O/YePdmKKdpGCN4VIZolbjqc29bhN1N/WlDYR7//z5aZOuX4E8OhxqOwbydbEB4H9EjLzDatCAVXQc+HFyg6u7LA1LM2xpOGERbIP5nLT2RB2A6j/vZUZ4GEkNhuk+0dS3jOZ1ufu/FkNrCe27SBvdSg8fM42Tz8jgrBmIChgyZK6IwGF7pxXQ85ZHCxRnC2gdbxJE7RCBzBqqHiXYST0bEzjA+SM867urjad75zP0Km7fsRXasztrqI2gHokzfGmAnc+jd3MZJ6SfJ1FxuU+7lsqx3wWDvKSXKg5I2sy53Zu3dmxmwiTUopxAV9FHV/Bifu8r4kk0K1sVYDMlFpyXqADyxWTyHvT8MLpjEf+NHSwuy7TiFSWQAeTSq8T/IIgnbROKTL4GBhHOob8MeNlm2OQzV5Uyw2ZGErB+gseYHIlsbsU0GqzcTYW3NEKqZK0XJNZDCdzqj9hTyEmxIZKTY4jUSNwP+szgmUqsXiPJXgOy05CgEoX0k5K0SRfZN7X8uZPc2owZMhEBDHn4saCWjJfjyJeJdS+2ROjLWxKdSfu7nenVwP/go9Q3pnX/EtfnHxmjvoCK9hJOL+3DW2LKLYVNauldlcM63uaMqL1jYBcsuz7/CS0jPhUzfSK8z6OrI5On0zRyP8GwFxrwtseeBDNXzmHvFNCpaIlzlVVfLo0ZtcP9eWaMJBzQAkF7NEVioW95w1HMczZSfPDsybns7KelLWTnMDAiMHabHge8TV3i5ggPrd9HugSwP8jhO2n4zfAOlm8ea95O5GzhKG7fJgyTy21eKoNpcAya5tQjgnBCGhUdyBc2sAiKDUMQpie7qBwUJVdomo2Hum9ilvp55X5xM9GBJFwyI9nHIoNoBXBjQbN08ba6GOtuZQFIBQ41WqiSTOUZHKVL2MHEwrVas7EiqnT/8/Ql60TjV85maFst1ei/EaMQhrn9ClEXyG4r1OlAMhEyZ5LOYOeCqQljcgLxeIPp0Qk+XqgOWiG9EhSIyCoUTKKv0bKa9jx2njk0/5oSwWnCQr0OlA1GLfuvH0niz8EI+HwEQyTzySON9q+ntrS9SQqb9a9IoxSxNR75UPk+sGkIG0Vm+lKwEo/r4xqHpsGTU7djBYG63l3uLgAY5dYDKQpsaU0PZGHJHj4CzDFflEfd0Zw0j6I0WWd5Xdwdo0IfBHRRubBN1+WFsLbM1jxpQpMuBJPms3biAMUnSms2Ft7xWf9O47Ea867HAlX7Z5US+B1KK2KtZZOdvd09M4pwzjEQhbigAH8tk7pBeoJ4ni7xwZ+0o9/tDTFxw2GmvIRbTAeeexNuWf536lirZIqg4JhlfCqY6cJM9Cm4N9bw4Hl0xMJhj+JUbRTZZkHU+bVWn5F6Q4l2sXNn5QTN2bXZHp7YJRe8v83WF6raMw07Y8FA/rqO2aAgX1gLflv24bbXf00mgKf7JCsOL1S8IelzWkKVUHIAab5Bf5NtPBFI7xs2J70r377oYuEh7F1pTPXJ/4Empu86Aijv9Iy9A0RAy8IQRZE0/Hk4AgPG075xCa/Gnpv/op2Cy5fzJ3k2izX8WuNMLS50eU0n6nsJEi/dWS1bdK/ZHEapVBOuYFwZeTVj3neksGrsi/hviXdvXmINXkEnJWvNj+Z6KVD6F5zyt7qmXH+zK8N0Hmdy01YF/aCxZLiPVfAVRsK4GN4xJkIfLnSo5qxDNOr/nX0frWWA39Cra8FumbnZVYOIspekKLVoqYRKZPxw2V/cd56H8K2ub0k9U7atQMeMpLXm21WecvValBkFiyDSc9MVnOMUCf1lxHyCuBV7u/CQS1QJv5A/cm0Wr5P5W3hX4glInf0+xCGiCPxn63iI3UXJ6YQQQNHSgcJZtoM0l95RrLYq2e5dXM0DBdI9lLJQoK8bPHiu5+87tt4QOXN7zlFoyo9/fCzQWwYsjOWLjSD8CbNvAsBJANpnEFGExzWR6TXejF13QaINJ1Zl8rOy+/9wlHbixEsmKl2QjAzCQIa45JD+s9YSf9l54v9glL6pvSe/2d+Uz516fZcs4ZbxNjhxjq1DoeLSeSoG2JoQRRmkTY23a8o5BUmHbifQk4KBb0Vhxv54q9aAIzqmEtr0EuzM+KTXkpqp8QZu78slUfFVsoh+hIWkSFBw4DtyAlR/gYY6uOFew+48NgrrSGeV5Z22gtVb2r3ZBPhFq7xbgN4din2KvGmIdcCQrrkjGYJgiQQ3340PcpusyIBo422lzDye6JNe3nvwcA9/wVnBSXGLuP3RuGxGQDJkDeMctCy9mQjUbToyuUOnrVXjNJQVZEX/7wtGh5wKKb0MQoRib9iSm6oIjl+pKFR+k4wb6cigor/4cyxxf12CPRw4Be8SKuhLVbZjFaQw=="
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 3917,
+          "candidatesTokenCount": 78,
+          "totalTokenCount": 4694,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 3917
+            }
+          ],
+          "thoughtsTokenCount": 699,
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-3.6-flash",
+        "responseId": "nsD6avWmNbqUvdIPuq608A4"
+      }
+    },
+    {
+      "run": 1,
+      "question": "תוסיף לסל שתי קופסאות עגבניות. כמה אשלם?",
+      "answer": "על פי הרשימה, המוצר הקיים הוא **Bella Italia עגבניות חתוכות (מארז של 3*400 גרם)**.\n\nהמוצר נמצא במבצע של **2 ב-25 ₪** (מחיר יחידה בודדת הוא 21.10 ₪).\n\nאם תוסיף 2 מארזים לסל, תשלם בסך הכל **25 ₪**.",
+      "model": "gemini-3.6-flash",
+      "stopReason": "STOP",
+      "usage": {
+        "promptTokenCount": 3916,
+        "candidatesTokenCount": 101,
+        "totalTokenCount": 4624,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3916
+          }
+        ],
+        "thoughtsTokenCount": 607,
+        "serviceTier": "standard"
+      },
+      "askedAt": "2026-11-16T08:36:55.118Z",
+      "rawResponse": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "על פי הרשימה, המוצר הקיים הוא **Bella Italia עגבניות חתוכות (מארז של 3*400 גרם)**.\n\nהמוצר נמצא במבצע של **2 ב-25 ₪** (מחיר יחידה בודדת הוא 21.10 ₪).\n\nאם תוסיף 2 מארזים לסל, תשלם בסך הכל **25 ₪**.",
+                  "thoughtSignature": "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"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 3916,
+          "candidatesTokenCount": 101,
+          "totalTokenCount": 4624,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 3916
+            }
+          ],
+          "thoughtsTokenCount": 607,
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-3.6-flash",
+        "responseId": "o8D6avz4EtXPnsEPg7e-yAM"
+      }
+    },
+    {
+      "run": 2,
+      "question": "תוסיף לסל שתי קופסאות עגבניות. כמה אשלם?",
+      "answer": "על פי הנתונים בעמוד, מוצר העגבניות הזמין הוא:\n**Bella Italia - עגבניות חתוכות (מארז 3*400 גרם)**.\n\n* **מחיר רגיל ליחידה:** 21.10 ₪\n* **מבצע:** 2 ב-25 ₪\n\nאם תוסיף לסל שתי יחידות, תשלם **25 ₪** סך הכל (במקום 42.20 ₪).",
+      "model": "gemini-3.6-flash",
+      "stopReason": "STOP",
+      "usage": {
+        "promptTokenCount": 3916,
+        "candidatesTokenCount": 118,
+        "totalTokenCount": 4757,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3916
+          }
+        ],
+        "thoughtsTokenCount": 723,
+        "serviceTier": "standard"
+      },
+      "askedAt": "2026-11-16T08:37:19.565Z",
+      "rawResponse": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "על פי הנתונים בעמוד, מוצר העגבניות הזמין הוא:\n**Bella Italia - עגבניות חתוכות (מארז 3*400 גרם)**.\n\n* **מחיר רגיל ליחידה:** 21.10 ₪\n* **מבצע:** 2 ב-25 ₪\n\nאם תוסיף לסל שתי יחידות, תשלם **25 ₪** סך הכל (במקום 42.20 ₪).",
+                  "thoughtSignature": "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"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 3916,
+          "candidatesTokenCount": 118,
+          "totalTokenCount": 4757,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 3916
+            }
+          ],
+          "thoughtsTokenCount": 723,
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-3.6-flash",
+        "responseId": "u8D6atfxNdaJvdIPpaOi0Qk"
+      }
+    },
+    {
+      "run": 3,
+      "question": "תוסיף לסל שתי קופסאות עגבניות. כמה אשלם?",
+      "answer": "לפי הנתונים מהאתר, המוצר הקיים הוא **Bella Italia עגבניות חתוכות (3 יחידות של 400 גרם)**.\n\nהמוצר נמצא במבצע של **2 ב-25 ש\"ח** (המחיר ליחידה בודדת הוא 21.10 ש\"ח).\n\nלכן, עבור שתי קופסאות תשלם סך הכל **25 ש\"ח**.",
+      "model": "gemini-3.6-flash",
+      "stopReason": "STOP",
+      "usage": {
+        "promptTokenCount": 3916,
+        "candidatesTokenCount": 104,
+        "totalTokenCount": 4618,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3916
+          }
+        ],
+        "thoughtsTokenCount": 598,
+        "serviceTier": "standard"
+      },
+      "askedAt": "2026-11-16T08:37:23.174Z",
+      "rawResponse": {
+        "candidates": [
+          {
+            "content": {
+              "parts": [
+                {
+                  "text": "לפי הנתונים מהאתר, המוצר הקיים הוא **Bella Italia עגבניות חתוכות (3 יחידות של 400 גרם)**.\n\nהמוצר נמצא במבצע של **2 ב-25 ש\"ח** (המחיר ליחידה בודדת הוא 21.10 ש\"ח).\n\nלכן, עבור שתי קופסאות תשלם סך הכל **25 ש\"ח**.",
+                  "thoughtSignature": "Er0PCroPAWkUfRMzvBy09Kr50vULGEGBezeUohdzco9C3QXYc8njwme0NnT1MPF7Jpl2SCffUjbGxhyfqBjuXR/7NWLkGMClq9A7uLxpnyyGtUCDpy0TjK5SZVn3plWz4Xlw761MMvLVBMNQJBsYQcmH8phxQc3Yl3uJPFqitaqeEWByRCl4dElMY8I1LhvcEs+59s2NsNK/3MdRxo45ArhqLDJ1bcJBFyPU/SIrha2kdmJVqXePFy5wbniTNmDQdWuFZZ0FXmKxHDheWejlJ6HE7vKWlKC2/OLRybYW0Pwn8UpKxOus9O99nU9+RztYkdTLBNIi7e2BfjLycm/U+TBWAms5FQQMCimGlIqIHpNV1nFC+sLmz3gpXeKtVpvBbe5f/dmLOb6J9jSvXR6LHvv5Q0FvW2OwiE7tB7C9Rt1jomnws4fSXEKuzX5fWNXJsdQaMvZuy53pZ5JDt883SMKoN6AAIr/t8e33urhK/PepZD/B4LzyyUm2kPOKarXcfFX/BeMg9oUS5BIaqxNSeoYjEevPtcW7AidjbpC2GBmfVugjGsSiv5Wi5Fa+PjwG3/3yFPBQmlEJ6nDOraTNb/ffKrL8oqRUbBBuo5AlEnrFT+RbKc4ei3XjUac1EklIj8H7JrPZPvEJUb4wjbqWNXBCVp5XDzxRxY5YsSq40LAFXSOT4oG2wqitd1dUU4sbfUHBmF6pe7R9klTnq015CHg8v7a20vMYvs1e23r/FcR5eFquCYgpq1qSfdFuZFPimmKwmSBvVjj+PV9sgX2E35TCGXc9Fzr3h9RFNd9jPl7g+Tct5w2Z/RDZt6F2BoYZbq91Cb5eBhExPZD7/a/j1NctrArg+dUa21wVjtDJGBgwmIF/D/MwLuTnYKrfQMeS05GYAu67JO7HUUvpEkg0TX7M29N/aZjM784PuGPlqweZgMJB7xrrfoqyHz5zdDHbUGJmVVKJrVT2/OMkEHcAGVl3c/VncdDrASIMBiebpaSGVlAFT4Em/Hq4lcubWn2VZ4vy1/eHTroT7Qr5VT17AOvQKrbDnB10/A43XJN18z0+MVffpaIIFWEJwgS5WekhcwhwJTB4e5HkvXkssyvcaWoY6YhgA7olwVKtd1XPj1iG82oU1tIVvqZqYkgFOkWhXkveWAFLRyhO5VwCwMmeiq3dB8GHG3k4SjGblAeCMVbHW4hgpijLMNhdrPnzaL2ZpUixiz3lJxkFPqAnNwM42Ry7NRaEp3CFKvUI9nT1OWzpEbkNcjo2fiYZ05ol1ATYRU3oTmwBfgAQ2TAxdpi8zU2pKFHFZ4q5VB6s5JDp2q1SjFVDtnxa9V5wnwjiHT53O+qmBWOLjMw/E7G+VSe+TT5cnVEwQ/tOx5JwvyIaN/TPRtvcuemdGUKeU/GXeyU2znqnCGOBQ/yeprpo37sMIbH8bEIKHjVm3+NFzjcvD2SE/Ks4UPS9rwPQugYTFdK+G3D7TFD07P/wE7gupwfqOJJd+jRd+PEm5CCOdSNVANlN3iN1bPhSCfYkd9tHNPF1FMY+FueA4dBT8ijvCDNx4a88VRr9zEOTS365qgsk/nWjmRyL5bXegJzhvOejLQlEvzWRgphSDtqtJKifCivC+2T0rACdlqzKS9QSKR7wuN74pbhbEYY2eGafjNwe+Lx0TBksqc5O/eyWk4N48ERiAvlraD7AgTa/d1i3MJ5EO1q77i0Ecj4klbUg2dMSFvfo5JKlpk+45OstL9qPYnGBXcTf123XrmkaeQHAHttCxcPNmdJqhRl/8BQFtpXKwHnoH3SiDQqVoGJjlSP8Euf07IeOfrn1qZdVsz2rsde09mE0YSnKCPgpSTpRFKYIuDbD7XA/zmx+w/M4hWZQFPEHASnSbnIM70SCjAqgW7QWAn2C2sDMtxsi2bU7j3D6s4BaX8+KH446eTDPbeYgkkcsbXWZXnmFUAgIBrCO1eqfajx8KXNY3KV7vBo2J6ibLo4mefDH+KddAW+T/PL0pa1e9RmcMe1NOZTceBUFbg7G90SYeEnvb6aiqhTtzHGMT4e58zXQeOczCvwke6xVAo573MRlI+IpbQQaLBvvU7MpdoRyZdgOKWxou7IUUaa2Yrd0Obd/HmNEG/TRKK966xoI8/9rHLCiBQLEmkiOEtliw3Y5szwMcgWDvNXjc9A4Soj13Ro5RMeNRSIVx8cNFhI8mDja9Get8urUUg7FgASUFGrVpy5zpi3p7QvjpkH0f13FATG6fsdv6kq6oihNQQsQUpK1ueqrFbr2ZPQlNa96bGEvCOsKBr0+9e8RWrxEZAM4PGszQP/RGBUa+SmooBJK601cxomhpbeYZCzCATa6muXAtfTdxLGm9+N8PU52XpM5YIC/j98Jev2r/JAGTTcEHov93Nj2pegcx9GG2Wgb17lqrJYATuK7lktBz5OgujYHCVRUEd31Xvjo4yYtFQWVOC2QaEHv15AX8k+Q8snTOKPd2vamI6suKP5cKHUkNDnTR3weWyKYnbgsza/JD7UUFis03pQQFl0VQk9bgSIYaVMapobfluTencPOXCqPaErd2zhGK4604w1W34ZPCgnuyPS5YRnybW6+R1HOzNpUfmLj0ovXfcTo3qQE72rzaVzzwg7PaflSF8uiU5GIfU7h2A=="
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          }
+        ],
+        "usageMetadata": {
+          "promptTokenCount": 3916,
+          "candidatesTokenCount": 104,
+          "totalTokenCount": 4618,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 3916
+            }
+          ],
+          "thoughtsTokenCount": 598,
+          "serviceTier": "standard"
+        },
+        "modelVersion": "gemini-3.6-flash",
+        "responseId": "wMD6atQ4msDE3w_W_4HJAw"
+      }
+    }
+  ]
+}

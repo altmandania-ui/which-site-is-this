@@ -1,0 +1,57 @@
+{
+  "provider": "Google Gemini API",
+  "requestedModel": "gemini-3.5-flash",
+  "systemPrompt": null,
+  "generationConfig": null,
+  "messageFormat": "one user message: full data/innerText.txt, blank line, then the question",
+  "task": "תקנה לי את המיץ הכי משתלם מהמבצעים בדף",
+  "answer": "המיץ היחיד (והכי משתלם) שמופיע במבצעים בדף ששלחת הוא:\n\n**עסיס ויטמינצ'יק טרופי**\n\n* **מחיר במבצע:** 10.00 ₪ בלבד (במקום 14.20 ₪).\n* **למה הוא הכי משתלם?**\n  1. זה המיץ היחיד שנמצא במבצעי המחיר בדף הזה.\n  2. מדובר בתרכיז מיץ – מבקבוק אחד מכינים כמות גדולה מאוד של ליטרים של מיץ, כך שמבחינת יחס מחיר לכמות משקאות הוא המשתלם ביותר בפער.",
+  "model": "gemini-3.6-flash",
+  "stopReason": "STOP",
+  "usage": {
+    "promptTokenCount": 3916,
+    "candidatesTokenCount": 174,
+    "totalTokenCount": 5176,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3916
+      }
+    ],
+    "thoughtsTokenCount": 1086,
+    "serviceTier": "standard"
+  },
+  "askedAt": "2026-11-16T08:08:15.311Z",
+  "rawResponse": {
+    "candidates": [
+      {
+        "content": {
+          "parts": [
+            {
+              "text": "המיץ היחיד (והכי משתלם) שמופיע במבצעים בדף ששלחת הוא:\n\n**עסיס ויטמינצ'יק טרופי**\n\n* **מחיר במבצע:** 10.00 ₪ בלבד (במקום 14.20 ₪).\n* **למה הוא הכי משתלם?**\n  1. זה המיץ היחיד שנמצא במבצעי המחיר בדף הזה.\n  2. מדובר בתרכיז מיץ – מבקבוק אחד מכינים כמות גדולה מאוד של ליטרים של מיץ, כך שמבחינת יחס מחיר לכמות משקאות הוא המשתלם ביותר בפער.",
+              "thoughtSignature": "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"
+            }
+          ],
+          "role": "model"
+        },
+        "finishReason": "STOP",
+        "index": 0
+      }
+    ],
+    "usageMetadata": {
+      "promptTokenCount": 3916,
+      "candidatesTokenCount": 174,
+      "totalTokenCount": 5176,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 3916
+        }
+      ],
+      "thoughtsTokenCount": 1086,
+      "serviceTier": "standard"
+    },
+    "modelVersion": "gemini-3.6-flash",
+    "responseId": "6bn6auCXE_aDxs0P-4DquQg"
+  }
+}

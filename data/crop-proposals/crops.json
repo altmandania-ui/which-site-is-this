@@ -1,0 +1,50 @@
+{
+  "q1": {
+    "left": 0,
+    "top": 0,
+    "right": 1440,
+    "bottom": 900
+  },
+  "q2": {
+    "left": 340,
+    "top": 460,
+    "right": 1440,
+    "bottom": 910
+  },
+  "q3": {
+    "left": 335,
+    "top": 520,
+    "right": 1065,
+    "bottom": 925
+  },
+  "q4": {
+    "left": 340,
+    "top": 180,
+    "right": 1420,
+    "bottom": 415
+  },
+  "q5": {
+    "left": 0,
+    "top": 0,
+    "right": 1440,
+    "bottom": 6259
+  },
+  "claim-footer": {
+    "left": 332,
+    "top": 5625,
+    "right": 1440,
+    "bottom": 6245
+  },
+  "claim-pasta": {
+    "left": 340,
+    "top": 985,
+    "right": 705,
+    "bottom": 1385
+  },
+  "claim-grizzly-ptitim": {
+    "left": 705,
+    "top": 985,
+    "right": 1432,
+    "bottom": 1385
+  }
+}

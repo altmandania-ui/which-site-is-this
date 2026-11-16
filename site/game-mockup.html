@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>סקיצה: בנו את הדף</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  body { padding: 7vh 7vw; }
+  .mock-note { font: 15px/1.4 var(--font-human); color: var(--quiet); margin: 0 0 5vh; }
+  .ask { font: 30px/1.35 var(--font-human); margin: 0 0 5vh; }
+  .board { display: grid; grid-template-columns: minmax(0, 20em) minmax(0, 1fr); gap: 6vw; align-items: start; }
+  .lines { list-style: none; margin: 0; padding: 0; font: 15px/2 var(--font-agent); }
+  .lines li { cursor: pointer; padding: 0 6px; }
+  .lines li.picked { background: var(--ink); color: var(--paper); }
+  .lines li.used { color: var(--quiet); text-decoration: line-through; cursor: default; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .card { border: 0.5px solid var(--rule); min-height: 330px; padding: 16px; display: flex; flex-direction: column; gap: 8px; cursor: pointer; position: relative; }
+  .card span { font: 17px/1.3 var(--font-human); cursor: pointer; align-self: flex-start; }
+  .card span.big { font-size: 34px; font-weight: 700; }
+  .card span.small { font-size: 12px; color: var(--quiet); }
+  .card span.tag { background: #fff; color: #000; padding: 2px 12px; font-size: 16px; }
+  .controls { margin-top: 5vh; display: flex; gap: 14px; align-items: center; }
+  .hint { font: 15px/1.4 var(--font-human); color: var(--quiet); }
+  #real { margin-top: 5vh; }
+  #real img { max-width: 100%; border: 0.5px solid var(--rule); animation: arrive 2s ease both; }
+</style>
+</head>
+<body>
+<p class="mock-note">סקיצה בלבד, לא חלק מהמצגת</p>
+<p class="ask">זה מה שהסוכן קיבל. עצבו מזה את המדף.</p>
+
+<div class="board">
+  <ul id="lines" class="lines"></ul>
+  <div>
+    <div id="cards" class="cards"><div class="card"></div><div class="card"></div><div class="card"></div></div>
+    <div class="controls">
+      <button id="reveal" class="plain-button" type="button">הראו את הדף האמיתי</button>
+      <span class="hint">בחרו שורה ואז כרטיס. לחיצה על שורה בתוך כרטיס משנה את הצורה שלה.</span>
+    </div>
+    <div id="real" hidden><img src="assets/crops/private-label-row.png" alt="המדף כפי שהוא באתר"></div>
+  </div>
+</div>
+
+<script>
+// Lines exactly as they appear in the collected innerText for these three products (a selection, in page order).
+var LINES = ['4 ב-11','רמי לוי שיווק השקמה','גריזלי גריל','3.50 ₪','5.00 ל-100 גרם','3 ב-10','רמי לוי שיווק השקמה','פתיתים אפויים בצורת אורז','5.00 ₪','1.00 ל-100 גרם','רמי לוי שיווק השקמה','פסטה איטלקית פוסילי','6.00 ₪','1.20 ל-100 גרם'];
+var STYLES = ['', 'big', 'small', 'tag'];
+var picked = null;
+var list = document.getElementById('lines');
+LINES.forEach(function (t) {
+  var li = document.createElement('li'); li.textContent = t;
+  li.onclick = function () {
+    if (li.classList.contains('used')) return;
+    if (picked) picked.classList.remove('picked');
+    picked = li; li.classList.add('picked');
+  };
+  list.appendChild(li);
+});
+Array.prototype.forEach.call(document.querySelectorAll('.card'), function (card) {
+  card.onclick = function () {
+    if (!picked) return;
+    var s = document.createElement('span'); s.textContent = picked.textContent; s.dataset.i = 0;
+    s.onclick = function (e) { e.stopPropagation(); s.dataset.i = (+s.dataset.i + 1) % STYLES.length; s.className = STYLES[s.dataset.i]; };
+    card.appendChild(s);
+    picked.classList.remove('picked'); picked.classList.add('used'); picked = null;
+  };
+});
+document.getElementById('reveal').onclick = function () { document.getElementById('real').hidden = false; document.getElementById('real').scrollIntoView({ behavior: 'smooth' }); };
+</script>
+</body>
+</html>

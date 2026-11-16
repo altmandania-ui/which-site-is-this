@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>לשמוע</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 1. Nothing to see: the premise, then only a voice. -->
+<section id="screen-1" class="screen stage" data-title="לשמוע">
+  <div id="s1-words" class="opening">
+    <p class="premise">אדם שאינו רואה מבקש מסוכן לתאר לו דף.</p>
+    <p id="s1-question" class="question"></p>
+  </div>
+</section>
+
+<!-- 2. Still nothing to see: choose what to ask, and listen. -->
+<section id="screen-2" class="screen stage" data-title="לשאול" hidden>
+  <div id="ask-words" class="opening">
+    <ul id="ask-list" class="ask-list"></ul>
+  </div>
+  <div id="ask-answer" class="answer" dir="auto" hidden></div>
+  <p id="ask-recall" class="again">כמה עלה החומוס?</p>
+</section>
+
+<!-- 3. The real page. -->
+<section id="screen-3" class="screen" data-title="לראות" hidden>
+  <img id="shot" src="assets/screenshot-full.png" alt="צילום מסך של עמוד הבית כפי שנאסף">
+  <div class="corner">
+    <button id="to-next" class="plain-button" type="button">המשך</button>
+  </div>
+</section>
+
+<!-- 4. What was said, beside what is there. -->
+<section id="screen-4" class="screen stage" data-title="מה נאמר, מה יש" hidden>
+  <div class="stage-grid">
+    <div class="said">
+      <p id="s3-question" class="question"></p>
+      <div id="s3-claim" class="claim" dir="auto"></div>
+    </div>
+    <div class="seen">
+      <img id="s3-crop" alt="" hidden>
+    </div>
+  </div>
+</section>
+
+<!-- 5. What the agent received. -->
+<section id="screen-5" class="screen" data-title="מה שהסוכן מקבל" hidden>
+  <div id="tree" class="agent-text" dir="ltr"></div>
+</section>
+
+<!-- 6. What somebody did write for the one who cannot see. -->
+<section id="screen-6" class="screen stage" data-title="מה שנכתב בשביל מי שלא רואה" hidden>
+  <div class="stage-grid">
+    <div class="said">
+      <p id="w-label" class="question"></p>
+      <div>
+        <div id="w-main" class="w-main" dir="auto"></div>
+      </div>
+    </div>
+    <div class="seen lit">
+      <img id="w-crop" alt="">
+    </div>
+  </div>
+</section>
+
+<!-- 7. The same request, asked again. -->
+<section id="screen-7" class="screen stage" data-title="אותה שאלה, שוב" hidden>
+  <p id="s7-question" class="question"></p>
+  <div id="s7-runs" class="runs"></div>
+  <p id="s7-again" class="again">שואלים שוב.</p>
+</section>
+
+<!-- Presenter hint: what the next key does. Press H to hide or show it. -->
+<div id="hint" class="hint-line"></div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
