@@ -63,7 +63,7 @@ p { margin: 0; }
 .round-head > * { min-width: 0; }
 .round-head { display: flex; justify-content: space-between; align-items: baseline; flex: none; padding-bottom: 3vh; }
 /* The whole text of the page, one line under another, to scroll through. */
-.feed, .page, .seen { overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--mute) transparent; outline: none; }
+.feed, .page-scroll, .page-text, .seen { overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--mute) transparent; outline: none; }
 .feed {
   flex: 1;
   min-height: 0;
@@ -86,17 +86,30 @@ p { margin: 0; }
 .array-line { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-top: 0.6vh; font-size: clamp(12px, 1.1vw, 20px); color: var(--mute); text-align: right; }
 .mode { padding-top: 1vh; }
 
-/* The real page, whole, takes the whole screen and scrolls like the page it is. */
+/* The real page and the agent's text, side by side over the whole screen. They move together:
+   scroll either one and the other goes to the same place. The lines that belong to what is on the
+   screen are lit; the rest of the text steps back. */
 .page {
   position: absolute;
   inset: 0 0 var(--bar) 0;
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 2.5vw;
+  padding: 3vh 3vw;
+  direction: ltr;
   background: var(--dark);
   opacity: 0;
   transition: opacity 1.6s ease;
   pointer-events: none;
 }
 .page.on { opacity: 1; pointer-events: auto; }
-.page img { display: block; width: 100%; height: auto; }
+.pane { display: flex; flex-direction: column; min-width: 0; min-height: 0; direction: rtl; }
+.pane-name { flex: none; padding-bottom: 1.5vh; font-size: clamp(14px, 1.3vw, 24px); }
+.page-scroll, .page-text { flex: 1; min-height: 0; }
+.page-scroll img { display: block; width: 100%; height: auto; }
+.page-text { position: relative; font-size: clamp(13px, 1.25vw, 24px); line-height: 1.5; }
+.page-text div { opacity: 0.28; transition: opacity 0.25s ease; cursor: pointer; }
+.page-text div.in { opacity: 1; }
 
 /* After the real page: the page and the text together. On the page only the answer is lit, where
    the eye found it; beside it are the lines the agent had for the same thing, all alike.
@@ -202,8 +215,11 @@ p { margin: 0; }
   .array-line { text-align: left; }
   .feed { font-size: 16px; }
   /* the real page is 1440 wide: shown larger than the screen, to move around in */
-  .page { overflow: auto; }
-  .page img { width: 260%; max-width: none; }
+  .page { grid-template-columns: none; grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); gap: 1.5vh; padding: 2vh 4vw; }
+  .page-scroll { overflow: auto; }
+  .page-scroll img { width: 260%; max-width: none; }
+  .pane-name { font-size: 13px; padding-bottom: 0.8vh; }
+  .page-text { font-size: 13px; }
   /* page above, the agent's lines below, and the whole thing scrolls if it has to */
   .look { overflow-y: auto; justify-content: flex-start; gap: 2vh; }
   .look-row { flex-direction: column; gap: 2vh; }

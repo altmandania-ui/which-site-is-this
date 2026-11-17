@@ -29,8 +29,9 @@
   var at = 0, step = 0;
   var screens = Array.prototype.slice.call(document.querySelectorAll('.screen'));
 
-  // ---------- a round: a task and the whole text; then the whole real page; then both together ----------
+  // ---------- a round: a task and the whole text; the page in pieces; the real page beside the text; the answer ----------
   var feed = $('round-text'), pageEl = $('round-page'), seenEl = $('round-seen');
+  var pageScroll = $('page-scroll'), pageText = $('page-text');
   var shownSite = -1;
   // The clock: how long the room has been inside each site's text. It runs only while the text is up.
   var spent = SITES.map(function () { return 0; }), clock = null;
@@ -88,6 +89,40 @@
     };
     if (im.complete && im.naturalWidth) paint(); else im.onload = paint;
   }
+  // The page and the text together. Each line of the text has a place on the page (measured, see
+  // collect/measure-lines.mjs). Whichever of the two the hand is on leads, and the other follows:
+  // the page brings the text to the line nearest the middle of the screen, the text brings the page
+  // to the line at its own middle. The lines whose place is on the screen right now are lit.
+  var leader = pageScroll, waiting = false;
+  function together() {
+    waiting = false;
+    var site = SITES[shownSite], img = $('page-img'), rows = pageText.children;
+    if (!site || !img.clientWidth || !rows.length) return;
+    var k = W / img.clientWidth, n, best = 0;
+    if (leader === pageText) {
+      var mid = pageText.scrollTop + pageText.clientHeight / 2;
+      for (n = 0; n < rows.length; n++) if (rows[n].offsetTop <= mid) best = n;
+      pageScroll.scrollTop = site.ys[best] / k - pageScroll.clientHeight / 2;
+    }
+    var top = pageScroll.scrollTop * k, foot = top + pageScroll.clientHeight * k, middle = (top + foot) / 2;
+    for (n = 0; n < rows.length; n++) {
+      rows[n].classList.toggle('in', site.ys[n] >= top && site.ys[n] <= foot);
+      if (leader !== pageText && Math.abs(site.ys[n] - middle) < Math.abs(site.ys[best] - middle)) best = n;
+    }
+    if (leader !== pageText) pageText.scrollTop = rows[best].offsetTop + rows[best].offsetHeight / 2 - pageText.clientHeight / 2;
+  }
+  [pageScroll, pageText].forEach(function (el) {
+    ['wheel', 'touchstart', 'pointerdown'].forEach(function (ev) { el.addEventListener(ev, function () { leader = el; }, { passive: true }); });
+    el.addEventListener('scroll', function () { if (leader === el && !waiting) { waiting = true; requestAnimationFrame(together); } }, { passive: true });
+  });
+  $('page-img').addEventListener('load', together);
+  // a click on a line takes the page to it
+  pageText.addEventListener('click', function (e) {
+    var n = Array.prototype.indexOf.call(pageText.children, e.target), site = SITES[shownSite];
+    if (n < 0 || !site) return;
+    leader = pageScroll;
+    pageScroll.scrollTo({ top: site.ys[n] * $('page-img').clientWidth / W - pageScroll.clientHeight / 2, behavior: 'smooth' });
+  });
   function pct(n) { return n + '%'; }
   function renderRound(stop) {
     var site = SITES[stop.site], task = site.task;
@@ -98,6 +133,8 @@
       feed.textContent = '';
       site.lines.forEach(function (l) { feed.appendChild(line(l)); });
       feed.scrollTop = 0;
+      pageText.textContent = '';
+      site.lines.forEach(function (l) { pageText.appendChild(line(l)); });
       seenEl.scrollTop = 0;
       drawSeen(stop.site);
       $('look-seen').textContent = task.seenNote;
@@ -127,8 +164,9 @@
     $('round-mode').textContent = step === 1
       ? 'סוכן שרואה: העמוד כולו כתמונה אחת, חתוכה ל-' + pieces + ' חלקים, אחד אחרי השני. באיזה חלק התשובה?'
       : 'סוכן שקורא: כל הטקסט של העמוד, ' + site.lines.length + ' שורות';
-    if (step === 2 && !pageEl.classList.contains('on')) { pageEl.scrollTop = 0; pageEl.scrollLeft = 0; }
+    var arriving = step === 2 && !pageEl.classList.contains('on');
     pageEl.classList.toggle('on', step === 2);
+    if (arriving) { leader = pageScroll; pageScroll.scrollTop = 0; pageScroll.scrollLeft = 0; together(); }
     showClock(stop.site);
     if (step <= 1) startClock(stop.site);
     var wrong = misses[stop.site];
@@ -138,7 +176,8 @@
   // What the up and down keys scroll: whichever of the text, the pieces and the page is up.
   function scroller() {
     if (STOPS[at].el !== 'screen-round') return null;
-    return [feed, seenEl, pageEl][step] || null;
+    if (step === 2) leader = pageScroll;
+    return [feed, seenEl, pageScroll][step] || null;
   }
 
   // ---------- all three: the texts side by side, then each one's page over it ----------
@@ -193,7 +232,7 @@
   try { hintsOn = localStorage.getItem('hints') !== 'off'; } catch (e) {}
   function updateHint() {
     var stop = STOPS[at], t = 'רווח: להמשיך';
-    if (stop.el === 'screen-round') t = ['גלילה או ↓↑: לעבור על הטקסט · רווח: אותו עמוד כתמונה', 'גלילה או ↓↑ · קליק על חלק: לבדוק אותו · רווח: לגלות את האתר', 'גלילה או ↓↑: לעבור על העמוד · רווח: מה העיצוב עשה כאן', 'רווח: להמשיך'][step];
+    if (stop.el === 'screen-round') t = ['גלילה או ↓↑: לעבור על הטקסט · רווח: אותו עמוד כתמונה', 'גלילה או ↓↑ · קליק על חלק: לבדוק אותו · רווח: לגלות את האתר', 'גלילה או ↓↑ בעמוד או בטקסט: שניהם זזים יחד · קליק על שורה: איפה היא בעמוד · רווח: מה העיצוב עשה כאן', 'רווח: להמשיך'][step];
     if (stop.el === 'screen-all') t = step === 0 ? 'רווח: להראות את שלושת האתרים' : 'רווח: להמשיך';
     if (stop.el === 'screen-sum') t = step < SITES.length - 1 ? 'רווח: האתר הבא' : step === SITES.length - 1 ? 'רווח: המשפט' : 'רווח: להמשיך';
     if (stop.el === 'screen-end') t = 'סוף · 1: להתחלה';
@@ -238,7 +277,7 @@
     if (e.key === ' ' || e.code === 'Space' || e.key === 'Enter' || e.key === 'ArrowLeft') { e.preventDefault(); advance(1); }
     else if (e.key === 'Backspace' || e.key === 'ArrowRight') { e.preventDefault(); advance(-1); }
   });
-  window.addEventListener('resize', function () { if (STOPS[at].el === 'screen-all') renderAll(); });
+  window.addEventListener('resize', function () { if (STOPS[at].el === 'screen-all') renderAll(); together(); });
 
   var first = parseInt(location.hash.slice(1), 10);
   go(first >= 1 && first <= STOPS.length ? first - 1 : 0);

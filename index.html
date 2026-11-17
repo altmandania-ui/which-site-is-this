@@ -16,7 +16,8 @@
 
 <!-- 2 to 4. One round per site. The room is the agent: it gets a task and the page's whole text,
      to scroll through. Then the same page as an agent that looks gets it: one picture, shrunk, cut
-     into pieces, and the pieces put one after another in an array. Then the real page, whole. Then both together: where the eye found the
+     into pieces, and the pieces put one after another in an array. Then the real page beside the text, moving together: the
+     lines lit are the ones the agent has for what is on the screen. Then where the eye found the
      answer, and what the agent had instead. -->
 <section id="screen-round" class="screen stage" hidden>
   <div class="round-head">
@@ -29,7 +30,16 @@
   </div>
   <div id="round-text" class="agent feed" tabindex="-1"></div>
   <div id="round-seen" class="seen" tabindex="-1" hidden><div id="seen-array" class="seen-array" dir="ltr"></div></div>
-  <div id="round-page" class="page" tabindex="-1"><img id="page-img" alt=""></div>
+  <div id="round-page" class="page">
+    <div class="pane">
+      <p class="small pane-name">מה שאדם רואה</p>
+      <div id="page-scroll" class="page-scroll" tabindex="-1"><img id="page-img" alt=""></div>
+    </div>
+    <div class="pane">
+      <p class="small pane-name">מה שהסוכן מקבל, באותו מקום</p>
+      <div id="page-text" class="agent page-text" tabindex="-1"></div>
+    </div>
+  </div>
   <div id="round-look" class="look">
     <div class="look-row">
       <div class="look-shot"><img id="look-img" alt=""><div id="look-spot" class="spot"></div></div>
