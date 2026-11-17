@@ -1,253 +1,181 @@
 (function () {
   'use strict';
-  var DATA = window.DATA;
+  var SITES = window.DATA.sites;
 
   // ---------- presenter settings ----------
-  var SPEECH_RATE = 1;        // 1 = the voice's normal speed
-  var TYPE_CPS = 45;          // characters per second when text appears without a voice
-  var RUNS_CPS = 70;          // characters per second on the two-runs screen
+  var LINES_IN_COLUMN = 60;     // lines per site on the screen that shows all three
+  var W = 1440, SCREEN = 900;   // every page picture is this wide; one screenful of it is this high
+  // How many pixels of picture each piece keeps when the page is shown "as the agent sees it".
+  // The number of pieces is measured (see collect/build-guess.mjs). This number is not: what a model
+  // keeps of a piece is not a small picture. It is an illustration; raise it and the page gets sharper.
+  var PIXELS_PER_PIECE = 32;
+  // How many pieces of the array go on one row of the screen. Keep it different from the number of
+  // pieces across each page (9, 23 and 16), or that page will simply appear whole.
+  var PIECES_PER_ROW = 12;
 
-  // What the voice reads on the opening screen: one continuous, unedited section of the saved
-  // description, from the line that starts with HEARD_FROM to the end of the line containing HEARD_TO.
-  // If either marker is missing, the whole description is read.
-  var HEARD_FROM = '#### 4.';
-  var HEARD_TO = 'קישורים נפוצים';
-  var heard = (function () {
-    var a = DATA.describe.answer, s = a.indexOf(HEARD_FROM);
-    var t = s === -1 ? -1 : a.indexOf(HEARD_TO, s);
-    if (t === -1) return a;
-    var e = a.indexOf('\n', t);
-    return a.slice(s, e === -1 ? a.length : e);
-  })();
-
-  // The four statements. Each is a continuous, unedited piece of a saved answer; a piece
-  // that is not found in the saved answer is not shown at all.
-  var CLAIMS = [
-    { from: DATA.describe, text: 'תחתית הדף צבועה ברקע כהה', crop: 'assets/crops/footer.png' },
-    { from: DATA.first, text: '**מבצעי המותג הפרטי של רמי לוי:** פסטה ב-6 ש"ח', crop: 'assets/crops/pasta.png' },
-    { from: DATA.first, text: '4 פתיתים/גריזלי ב-11 ש"ח', crop: 'assets/crops/grizzly-ptitim.png' },
-    { from: DATA.asks[2], text: 'מה שהכי בולט בדף הוא **המבצעים הכמותיים ("X ב-Y") והמחירים המוזלים**', crop: 'assets/crops/banner.png' },
-  ].filter(function (c) { return c.from.answer.indexOf(c.text) !== -1; });
-
-  var LAST = 7;
   var $ = function (id) { return document.getElementById(id); };
+  function line(text) { var d = document.createElement('div'); d.textContent = text; return d; }
+
+  // The order of the piece: the premise, one round per site, all three together, the bill, the end.
+  // Each stop has steps; Space moves one step, then on to the next stop.
+  var STOPS = [{ el: 'screen-1', steps: 1 }];
+  SITES.forEach(function (s, i) { STOPS.push({ el: 'screen-round', steps: 4, site: i }); });
+  STOPS.push({ el: 'screen-all', steps: 2 }, { el: 'screen-sum', steps: SITES.length + 1 }, { el: 'screen-end', steps: 1 });
+
+  var at = 0, step = 0;
   var screens = Array.prototype.slice.call(document.querySelectorAll('.screen'));
-  var current = 1;
-  var step = { 1: 0, 4: 0, 5: 0, 6: 0 };
-  var STEPS = { 1: 2, 4: 0, 5: 0, 6: 5 };
 
-  // ---------- voice ----------
-  var synth = window.speechSynthesis || null;
-  function hebrewVoice() {
-    if (!synth) return null;
-    var v = synth.getVoices().filter(function (x) { return /^he/i.test(x.lang); });
-    return v.filter(function (x) { return x.localService; })[0] || v[0] || null;
+  // ---------- a round: a task and the whole text; then the whole real page; then both together ----------
+  var feed = $('round-text'), pageEl = $('round-page'), seenEl = $('round-seen');
+  var shownSite = -1;
+  // The clock: how long the room has been inside each site's text. It runs only while the text is up.
+  var spent = SITES.map(function () { return 0; }), clock = null;
+  function mmss(ms) { var s = Math.floor(ms / 1000); return Math.floor(s / 60) + ':' + ('0' + s % 60).slice(-2); }
+  function showClock(i) { $('round-count').textContent = (misses[i] ? misses[i] + ' ✕  ·  ' : '') + mmss(spent[i]) + '  ·  ' + (i + 1) + ' / ' + SITES.length; }
+  function stopClock() { clearInterval(clock); clock = null; }
+  function startClock(i) {
+    var last = Date.now();
+    clock = setInterval(function () { var now = Date.now(); spent[i] += now - last; last = now; showClock(i); }, 250);
   }
-  if (synth) synth.getVoices(); // some browsers load the list lazily
-
-  // Markdown symbols are shown on screen but not read aloud. map[i] = position in the
-  // original text of the i-th spoken character.
-  function spokenForm(text, offset) {
-    var out = '', map = [];
-    var isRule = /^\s*-{3,}\s*$/.test(text);
-    for (var i = 0; i < text.length; i++) {
-      var ch = text[i];
-      var code = text.charCodeAt(i);
-      // symbols and emoji are shown but not read aloud
-      if (ch === '*' || ch === '#' || (isRule && ch === '-') || (code >= 0x2190 && code <= 0x2BFF) || (code >= 0xD800 && code <= 0xDFFF) || code === 0xFE0F) continue;
-      out += ch; map.push(offset + i);
+  // The page as an agent that looks gets it: cut into pieces, each piece shrunk to PIXELS_PER_PIECE
+  // pixels a side, and the pieces put one after another, numbered, in one array. The array is shown
+  // PIECES_PER_ROW to a row, which is not how many the page had across, so the page does not come
+  // back together on the screen: where a piece was on the page is something the agent has to be told.
+  // The room has to find the answer in the array too: it calls out a piece, the presenter clicks it.
+  // A piece that holds none of the answer goes dim and is counted. A piece that holds some of it
+  // lights every piece the answer is spread over.
+  var pictures = SITES.map(function (s) { var im = new Image(); im.src = s.image; return im; });
+  var misses = SITES.map(function () { return 0; });
+  function holdsAnswer(i, n) {
+    var g = SITES[i].grid, t = SITES[i].task.spot, side = W / g.cols, edge = 8;   // a sliver under 8 pixels does not count
+    var x = (n % g.cols) * side, y = Math.floor(n / g.cols) * side;
+    return x + side > t[0] + edge && x < t[0] + t[2] - edge && y + side > t[1] + edge && y < t[1] + t[3] - edge;
+  }
+  function pick(i, n, tile) {
+    if (tile.classList.contains('miss') || tile.classList.contains('hit')) return;
+    if (!holdsAnswer(i, n)) { tile.classList.add('miss'); misses[i]++; return showClock(i); }
+    Array.prototype.forEach.call($('seen-array').children, function (t, k) { if (holdsAnswer(i, k)) t.classList.add('hit'); });
+    $('seen-array').classList.add('found');
+  }
+  function drawSeen(i) {
+    var g = SITES[i].grid, im = pictures[i], box = $('seen-array'), P = PIXELS_PER_PIECE;
+    box.textContent = ''; box.classList.remove('found');
+    box.style.gridTemplateColumns = 'repeat(' + PIECES_PER_ROW + ', 1fr)';
+    $('round-array').textContent = '';
+    var paint = function () {
+      if (shownSite !== i || box.firstChild) return;
+      var side = W / g.cols, first = null;
+      for (var n = 0; n < g.cols * g.rows; n++) {
+        var tile = document.createElement('div'); tile.className = 'tile';
+        var c = document.createElement('canvas'); c.width = c.height = P;
+        var ctx = c.getContext('2d'); ctx.imageSmoothingQuality = 'high';
+        ctx.drawImage(im, (n % g.cols) * side, Math.floor(n / g.cols) * side, side, side, 0, 0, P, P);
+        var label = document.createElement('span'); label.textContent = n;
+        tile.appendChild(c); tile.appendChild(label); box.appendChild(tile);
+        tile.onclick = pick.bind(null, i, n, tile);
+        if (!first) first = ctx;
+      }
+      // What one piece is, to the agent: numbers. The first twelve of piece 0, read from the picture.
+      try {
+        var d = first.getImageData(0, 0, 4, 1).data, nums = [];
+        for (var k = 0; k < 16; k++) if (k % 4 !== 3) nums.push(d[k]);
+        $('round-array').textContent = '[0] = [' + nums.join(', ') + ', … ' + (P * P * 3).toLocaleString('en-US') + ']';
+      } catch (e) {}   // opened from separate files, the browser will not let the picture be read back
+    };
+    if (im.complete && im.naturalWidth) paint(); else im.onload = paint;
+  }
+  function pct(n) { return n + '%'; }
+  function renderRound(stop) {
+    var site = SITES[stop.site], task = site.task;
+    if (shownSite !== stop.site) {
+      shownSite = stop.site; spent[stop.site] = 0; misses[stop.site] = 0;
+      $('round-ask').textContent = task.ask;
+      // the whole text at once, from its first line
+      feed.textContent = '';
+      site.lines.forEach(function (l) { feed.appendChild(line(l)); });
+      feed.scrollTop = 0;
+      seenEl.scrollTop = 0;
+      drawSeen(stop.site);
+      $('look-seen').textContent = task.seenNote;
+      $('page-img').src = site.image;
+      // The last step, made ready: one screenful of the page with only the answer lit, beside the
+      // lines the agent had. The screenful is the one with the answer at its middle.
+      var x = task.spot[0], y = task.spot[1], w = task.spot[2], h = task.spot[3];
+      var top = Math.max(0, Math.min(site.height - SCREEN, Math.round(y + h / 2 - SCREEN / 2)));
+      $('look-img').src = site.image;
+      $('look-img').style.top = pct(-100 * top / SCREEN);
+      var spot = $('look-spot').style;
+      spot.left = pct(100 * x / W); spot.width = pct(100 * w / W);
+      spot.top = pct(100 * (y - top) / SCREEN); spot.height = pct(100 * h / SCREEN);
+      $('look-text').textContent = '';
+      task.lines.forEach(function (l) { $('look-text').appendChild(line(l)); });
+      $('look-caption').textContent = task.caption;
     }
-    return { text: out, map: map };
+    // the text and the picture-in-pieces share one place under the task
+    feed.hidden = step === 1; seenEl.hidden = step !== 1;
+    $('round-array').hidden = step !== 1;
+    var pieces = (site.grid.cols * site.grid.rows).toLocaleString('en-US');
+    $('round-mode').textContent = step === 1
+      ? 'סוכן שרואה: העמוד כולו כתמונה אחת, חתוכה ל-' + pieces + ' חלקים, אחד אחרי השני. באיזה חלק התשובה?'
+      : 'סוכן שקורא: כל הטקסט של העמוד, ' + site.lines.length + ' שורות';
+    if (step === 2 && !pageEl.classList.contains('on')) pageEl.scrollTop = 0;
+    pageEl.classList.toggle('on', step === 2);
+    showClock(stop.site);
+    if (step <= 1) startClock(stop.site);
+    var wrong = misses[stop.site];
+    $('look-time').textContent = spent[stop.site] >= 1000 ? 'הייתם הסוכן ' + mmss(spent[stop.site]) + (wrong ? ', ו' + (wrong === 1 ? 'הצבעתם פעם אחת על חלק לא נכון' : 'הצבעתם ' + wrong + ' פעמים על חלק לא נכון') : '') + '. בעמוד זה לקח מבט.' : '';
+    $('round-look').classList.toggle('on', step === 3);
+  }
+  // What the up and down keys scroll: whichever of the text, the pieces and the page is up.
+  function scroller() {
+    if (STOPS[at].el !== 'screen-round') return null;
+    return [feed, seenEl, pageEl][step] || null;
   }
 
-  // Reads `full` aloud and, when `el` is given, reveals it there in step with the voice.
-  // With no Hebrew voice it types silently.
-  var active = null;
-  function stopTelling() {
-    if (active) { active.dead = true; clearInterval(active.timer); active = null; }
-    if (synth) synth.cancel();
-  }
-  function tell(el, full, cps, withVoice) {
-    stopTelling();
-    var job = active = { dead: false, timer: null, shown: 0 };
-    function show(n) {
-      if (job.dead || n <= job.shown) return;
-      job.shown = Math.min(n, full.length);
-      if (!el) return;
-      el.textContent = full.slice(0, job.shown);
-      el.scrollTop = el.scrollHeight;
-    }
-    function typeTo(end, rate) {
-      clearInterval(job.timer);
-      var pos = job.shown, last = performance.now();
-      job.timer = setInterval(function () {
-        var now = performance.now();
-        pos += (now - last) / 1000 * rate; last = now;
-        show(Math.floor(pos));
-        if (pos >= end) { clearInterval(job.timer); show(end); }
-      }, 30);
-    }
-
-    var voice = withVoice ? hebrewVoice() : null;
-    if (!voice) { typeTo(full.length, cps); return; }
-
-    // One utterance per line keeps long passages reliable and the text in step with the voice.
-    var lines = [], at = 0;
-    full.split('\n').forEach(function (line) { lines.push({ start: at, end: at + line.length + 1, text: line }); at += line.length + 1; });
-    var i = 0, boundarySeen = false;
-    (function next() {
-      if (job.dead) return;
-      if (i >= lines.length) return show(full.length);
-      var ln = lines[i++];
-      var sp = spokenForm(ln.text, ln.start);
-      if (!sp.text.trim()) { show(ln.end); return next(); }
-      var u = new SpeechSynthesisUtterance(sp.text);
-      u.voice = voice; u.lang = voice.lang; u.rate = SPEECH_RATE;
-      u.onstart = function () {
-        // Until the browser proves it reports word boundaries, pace the text by estimate.
-        if (!boundarySeen) typeTo(ln.end, 13 * SPEECH_RATE);
-      };
-      u.onboundary = function (e) {
-        if (job.dead) return;
-        if (!boundarySeen) { boundarySeen = true; clearInterval(job.timer); }
-        var endOfWord = sp.text.slice(e.charIndex).search(/\s/);
-        var j = endOfWord === -1 ? sp.text.length - 1 : e.charIndex + endOfWord;
-        show(sp.map[Math.min(j, sp.map.length - 1)] + 1);
-      };
-      u.onend = function () { if (job.dead) return; clearInterval(job.timer); show(ln.end); next(); };
-      u.onerror = function () { if (job.dead) return; clearInterval(job.timer); typeTo(full.length, cps); };
-      synth.speak(u);
-    })();
-  }
-
-  // ---------- 1. the premise, then only the voice ----------
-  function renderScreen1(fromKey) {
-    stopTelling();
-    $('s1-question').textContent = DATA.describe.question;
-    $('s1-words').classList.toggle('gone', step[1] === 1);
-    if (step[1] === 1 && fromKey) tell(null, heard, TYPE_CPS, true);
-  }
-
-  // ---------- 2. asking: choose a request, hear the saved answer, see nothing ----------
-  // After the list of products on sale has been heard once, the screen asks for one detail from it.
-  // There is nothing to look back at: the only way to find it is to ask again and listen from the start.
-  var RECALL_AFTER = 0; // which request is followed by the detail question
-  var ask = { at: 0, asking: false, asked: {}, recall: false, again: false };
-  var askItems = DATA.asks.map(function (a, i) {
-    var li = document.createElement('li');
-    li.textContent = a.question;
-    li.addEventListener('click', function () { if (ask.asking || ask.recall) return; ask.at = i; askNow(); });
-    $('ask-list').appendChild(li);
-    return li;
+  // ---------- all three: the texts side by side, then each one's page over it ----------
+  var cols = $('all-cols');
+  SITES.forEach(function (s) {
+    var col = document.createElement('div'); col.className = 'col';
+    var text = document.createElement('div'); text.className = 'agent';
+    s.lines.slice(0, LINES_IN_COLUMN).forEach(function (l) { text.appendChild(line(l)); });
+    var img = document.createElement('img'); img.src = s.image; img.alt = '';   // CSS shows its first screenful
+    col.appendChild(text); col.appendChild(img);
+    cols.appendChild(col);
   });
-  function renderAsk() {
-    askItems.forEach(function (li, i) {
-      li.classList.toggle('at', i === ask.at);
-      li.classList.toggle('asked', !!ask.asked[i]);
-    });
-    $('ask-words').classList.toggle('gone', ask.asking || ask.recall);
-    $('ask-recall').classList.toggle('on', ask.recall);
-    if (!ask.asking) { $('ask-answer').hidden = true; $('ask-answer').textContent = ''; }
-  }
-  function askNow() {
-    ask.asking = true; renderAsk(); updateHint();
-    // With a voice the paper stays empty. Only if this browser has no Hebrew voice is the answer written out.
-    var panel = hebrewVoice() ? null : $('ask-answer');
-    if (panel) panel.hidden = false;
-    tell(panel, DATA.asks[ask.at].answer, TYPE_CPS, true);
-  }
-  function askKey(e) {
-    if (e.key === ' ' || e.code === 'Space') {
-      e.preventDefault();
-      if (ask.asking) {
-        stopTelling(); ask.asking = false;
-        if (ask.at === RECALL_AFTER && !ask.again) ask.recall = true;
-        else { ask.asked[ask.at] = true; ask.again = false; }
-        renderAsk(); updateHint();
-      } else if (ask.recall) { ask.recall = false; ask.again = true; askNow(); }
-      else askNow();
-    } else if (!ask.asking && !ask.recall && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
-      e.preventDefault();
-      ask.at = (ask.at + (e.key === 'ArrowDown' ? 1 : askItems.length - 1)) % askItems.length;
-      renderAsk();
-    }
-  }
-
-  // ---------- 4. what was said, what is there ----------
-  // per statement: the words (spoken), then the place on the page
-  var BEATS = [];
-  CLAIMS.forEach(function (c) { BEATS.push({ c: c, kind: 'said' }, { c: c, kind: 'place' }); });
-  STEPS[4] = BEATS.length;
-  function renderScreen3(fromKey) {
-    var beat = BEATS[step[4]];
-    var claim = $('s3-claim'), crop = $('s3-crop');
-    stopTelling();
-    if (!beat) return;
-    $('s3-question').textContent = beat.c.from.question;
-    if (beat.kind === 'said') {
-      crop.hidden = true;
-      claim.textContent = '';
-      tell(claim, beat.c.text, TYPE_CPS, fromKey);
-    } else {
-      claim.textContent = beat.c.text;
-      if (crop.getAttribute('src') !== beat.c.crop) crop.src = beat.c.crop;
-      crop.hidden = false;
-    }
-  }
-
-  // ---------- 5. one product card: what is on the screen, what the listener is given ----------
-  // HEARD_PRICE is a continuous, unedited piece of the card's line in the collected accessibility tree.
-  var HEARD_PRICE = 'מחיר קודם 14.20 שקלים חדשים 1 ב-10 מחיר נוכחי 10.00 שקלים חדשים';
-  var priceLine = DATA.aria.split('\n').filter(function (l) { return l.indexOf("ויטמינצ'יק טרופי " + HEARD_PRICE) !== -1; })[0];
-  STEPS[5] = priceLine ? 2 : 0;
-  // steps: 0 the card as it is seen | 1 the words a listener is given for the same card, spoken
-  function renderWritten(fromKey) {
-    var s = step[5], main = $('w-main');
-    stopTelling();
-    $('w-crop').src = 'assets/crops/vitaminchik.png';
-    main.classList.add('agent');
-    if (s === 0) {
-      $('w-label').textContent = 'מה שרואים';
-      main.textContent = '';
-    } else {
-      $('w-label').textContent = 'מה שמקבל מי שלא רואה';
-      main.textContent = '';
-      tell(main, HEARD_PRICE, TYPE_CPS, fromKey);
-    }
-  }
-
-  // ---------- 6. asked directly, then asked to act ----------
-  // Two saved answers about the same product. The first is heard and shown whole.
-  // Of the second, the voice reads its opening, up to the end of ACT_UNTIL; the screen then shows it whole.
-  var ACT_UNTIL = 'בטוח לשימוש מבחינת רכיבי שומשום.';
-  var actHeard = (function () {
-    var i = DATA.act.answer.indexOf(ACT_UNTIL);
-    return i === -1 ? DATA.act.answer : DATA.act.answer.slice(0, i + ACT_UNTIL.length);
-  })();
-  // Each column shows exactly what the voice read. Markdown symbols stay, as the model wrote them, but dimmed.
-  function dimmed(node, text) {
-    text.split(/([*#]+)/).forEach(function (part, i) {
-      if (!part) return;
-      if (i % 2) { var m = document.createElement('span'); m.className = 'mark'; m.textContent = part; node.appendChild(m); }
-      else node.appendChild(document.createTextNode(part));
+  // When the pictures arrive, each column's text moves down to sit under its picture.
+  function renderAll() {
+    var seen = step === 1;
+    cols.classList.toggle('seen', seen);
+    Array.prototype.forEach.call(cols.children, function (col) {
+      var img = col.querySelector('img');
+      col.querySelector('.agent').style.paddingTop = seen ? (img.offsetWidth * SCREEN / W + 16) + 'px' : '0';
     });
   }
-  [[DATA.direct, DATA.direct.answer], [DATA.act, actHeard]].forEach(function (r) {
-    var col = document.createElement('div'); col.className = 'run';
-    var q = document.createElement('p'); q.className = 'ask-q'; q.textContent = r[0].question;
-    var t = document.createElement('div'); t.className = 'piece'; t.dir = 'auto'; dimmed(t, r[1]);
-    col.appendChild(q); col.appendChild(t);
-    $('s7-runs').appendChild(col);
+
+  // ---------- the bill: a cut-out of each page where the design spoke, and what the agent got ----------
+  var sumRows = SITES.map(function (s) {
+    var x = s.task.spot[0], y = s.task.spot[1], w = s.task.spot[2], h = s.task.spot[3];
+    var row = document.createElement('div'); row.className = 'sum-row';
+    var crop = document.createElement('div'); crop.className = 'crop';
+    crop.style.aspectRatio = w + ' / ' + h;
+    var img = document.createElement('img'); img.src = s.image; img.alt = '';
+    img.style.width = (100 * W / w) + '%';
+    img.style.left = (-100 * x / w) + '%';
+    img.style.top = (-100 * y / h) + '%';
+    crop.appendChild(img);
+    var arrow = document.createElement('div'); arrow.className = 'small'; arrow.textContent = '←';
+    var got = document.createElement('div');
+    if (s.task.got.length) { got.className = 'agent'; s.task.got.forEach(function (l) { got.appendChild(line(l)); }); }
+    else { got.className = 'small'; got.textContent = 'לא הגיע'; }
+    row.appendChild(crop); row.appendChild(arrow); row.appendChild(got);
+    $('sum-rows').appendChild(row);
+    return row;
   });
-  // steps: 0 the first request | 1 its answer, heard | 2 the second request | 3 its answer, heard | 4 both shown
-  function renderRuns(fromKey) {
-    stopTelling();
-    var s = step[6], ear = s === 1 || s === 3;
-    $('s7-question').textContent = s < 2 ? DATA.direct.question : DATA.act.question;
-    $('screen-6').classList.toggle('ear', ear);
-    $('screen-6').classList.toggle('both', s === 4);
-    $('s7-runs').classList.toggle('on', s === 4);
-    if (ear && fromKey) tell(null, s === 1 ? DATA.direct.answer : actHeard, TYPE_CPS, true);
+  function renderSum() {
+    sumRows.forEach(function (row, i) { row.classList.toggle('on', i <= step); });
+    $('sum-foot').classList.toggle('on', step === SITES.length);
+    var total = spent.reduce(function (a, b) { return a + b; }, 0);
+    $('sum-time').textContent = total >= 1000 ? 'הייתם סוכן במשך ' + mmss(total) + '.' : '';
   }
 
   // ---------- presenter hint ----------
@@ -255,63 +183,47 @@
   var hintsOn = true;
   try { hintsOn = localStorage.getItem('hints') !== 'off'; } catch (e) {}
   function updateHint() {
-    var t = '';
-    if (current === 1) t = step[1] === 0 ? 'רווח: להשמיע' : 'רווח: להמשיך';
-    if (current === 2) t = ask.asking ? 'רווח: לעצור' : (ask.recall ? 'רווח: לשאול שוב ולהקשיב מההתחלה · Enter: להמשיך אל הדף' : 'חצים למעלה ולמטה: לבחור · רווח: לשאול · Enter: להמשיך אל הדף');
-    if (current === 3) t = 'לגלול · Enter: להמשיך';
-    if (current === 4) { var bt = BEATS[step[4]], nx = BEATS[step[4] + 1]; t = (bt && bt.kind === 'said' ? 'רווח: להראות את המקום בדף' : (nx ? 'רווח: המשפט הבא' : 'רווח: להמשיך')) + ' · Backspace: צעד אחורה'; }
-    if (current === 5) t = (step[5] === 0 ? 'רווח: להשמיע מה מקבל מי שלא רואה' : 'רווח: להמשיך') + ' · Backspace: צעד אחורה';
-    if (current === 6) t = (step[6] === 0 || step[6] === 2) ? 'רווח: לשמוע תשובה' : 'רווח: להמשיך';
-    if (current === 7) t = 'סוף · 1: להתחלה';
-    // While the voice speaks in the dark there is nothing on the screen at all: no hint, no pointer.
-    var listening = (current === 1 && step[1] === 1) || (current === 2 && ask.asking) || (current === 6 && (step[6] === 1 || step[6] === 3));
-    document.body.classList.toggle('blackout', listening);
-    hintEl.textContent = t + ' · H: להסתיר';
-    hintEl.hidden = !hintsOn || listening;
+    var stop = STOPS[at], t = 'רווח: להמשיך';
+    if (stop.el === 'screen-round') t = ['גלילה או ↓↑: לעבור על הטקסט · רווח: אותו עמוד כתמונה', 'גלילה או ↓↑ · קליק על חלק: לבדוק אותו · רווח: לגלות את האתר', 'גלילה או ↓↑: לעבור על העמוד · רווח: מה העיצוב עשה כאן', 'רווח: להמשיך'][step];
+    if (stop.el === 'screen-all') t = step === 0 ? 'רווח: להראות את שלושת האתרים' : 'רווח: להמשיך';
+    if (stop.el === 'screen-sum') t = step < SITES.length - 1 ? 'רווח: האתר הבא' : step === SITES.length - 1 ? 'רווח: המשפט' : 'רווח: להמשיך';
+    if (stop.el === 'screen-end') t = 'סוף · 1: להתחלה';
+    hintEl.textContent = t + ' · Backspace: צעד אחורה · H: להסתיר';
+    hintEl.hidden = !hintsOn;
   }
 
   // ---------- navigation ----------
-  function render(fromKey) {
-    if (current === 1) renderScreen1(fromKey);
-    if (current === 2) { ask.asking = false; ask.recall = false; ask.again = false; renderAsk(); }
-    if (current === 4) renderScreen3(fromKey);
-    if (current === 5) renderWritten(fromKey);
-    if (current === 6) renderRuns(fromKey);
+  function render() {
+    var stop = STOPS[at], target = $(stop.el);
+    stopClock();
+    screens.forEach(function (s) { s.hidden = s !== target; });
+    if (stop.el === 'screen-round') renderRound(stop);
+    else shownSite = -1;
+    if (stop.el === 'screen-all') renderAll();
+    if (stop.el === 'screen-sum') renderSum();
+    if (location.hash !== '#' + (at + 1)) history.replaceState(null, '', '#' + (at + 1));
     updateHint();
   }
-  function show(n, fromKey) {
-    var target = $('screen-' + n);
-    if (!target) return;
-    stopTelling();
-    current = n;
-    screens.forEach(function (s) { s.hidden = s !== target; });
-    document.title = target.dataset.title;
-    if (location.hash !== '#' + n) history.pushState(null, '', '#' + n);
-    window.scrollTo(0, 0);
-    if (step[n] !== undefined) step[n] = 0;
-    render(fromKey);
-  }
+  function go(n) { if (n < 0 || n >= STOPS.length) return; at = n; step = 0; render(); }
   function advance(dir) {
-    if (STEPS[current] === undefined) return;
-    var s = step[current] + dir;
-    if (s < 0) return;
-    if (s >= STEPS[current]) { if (current < LAST) show(current + 1, true); return; }
-    step[current] = s; render(true);
+    var s = step + dir;
+    if (s >= STOPS[at].steps) return go(at + 1);
+    if (s < 0) { if (at > 0) { at--; step = STOPS[at].steps - 1; render(); } return; }
+    step = s; render();
   }
 
-  window.addEventListener('popstate', function () { show(parseInt(location.hash.slice(1), 10) || 1, false); });
   window.addEventListener('keydown', function (e) {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
-    if (/^[1-7]$/.test(e.key)) return show(parseInt(e.key, 10), true);
+    if (/^[1-9]$/.test(e.key)) return go(parseInt(e.key, 10) - 1);
     if (e.key === 'h' || e.key === 'H' || e.key === 'י') { hintsOn = !hintsOn; try { localStorage.setItem('hints', hintsOn ? 'on' : 'off'); } catch (err) {} return updateHint(); }
-    if (e.key === 'Enter') { e.preventDefault(); if (current < LAST) show(current + 1, true); return; }
-    if (current === 2) return askKey(e);
-    if (STEPS[current] === undefined) return; // on the scrolling screen Space scrolls, as in any page
-    if (e.key === ' ' || e.code === 'Space') { e.preventDefault(); advance(1); }
-    else if (e.key === 'Backspace') { e.preventDefault(); advance(-1); }
+    var sc = scroller(), far = { ArrowDown: 0.5, ArrowUp: -0.5, PageDown: 0.9, PageUp: -0.9 }[e.key];
+    if (sc && far) { e.preventDefault(); return sc.scrollBy({ top: far * sc.clientHeight, behavior: 'smooth' }); }
+    if (sc && (e.key === 'Home' || e.key === 'End')) { e.preventDefault(); return sc.scrollTo({ top: e.key === 'Home' ? 0 : sc.scrollHeight, behavior: 'smooth' }); }
+    if (e.key === ' ' || e.code === 'Space' || e.key === 'Enter' || e.key === 'ArrowLeft') { e.preventDefault(); advance(1); }
+    else if (e.key === 'Backspace' || e.key === 'ArrowRight') { e.preventDefault(); advance(-1); }
   });
-  $('to-next').addEventListener('click', function () { show(4, true); });
-  window.addEventListener('pagehide', stopTelling);
+  window.addEventListener('resize', function () { if (STOPS[at].el === 'screen-all') renderAll(); });
 
-  show(parseInt(location.hash.slice(1), 10) || 1, false);
+  var first = parseInt(location.hash.slice(1), 10);
+  go(first >= 1 && first <= STOPS.length ? first - 1 : 0);
 })();
