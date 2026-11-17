@@ -20,6 +20,9 @@
 // columns = floor(sqrt(1120 * width / height)) and rows = floor(height / piece). That rule is used
 // for all three pages; the build fails if it stops giving 1,104 for the supermarket. For the other
 // two pages the number is computed, not measured.
+// The page and the text together. collect/measure-lines.mjs found where each line of the saved text
+// sits on its live page (data/guess/<id>-lines.json). Each line gets one number here: how far down
+// the picture it is. A line that was not found is put evenly between the found lines around it.
 //   seenNote  something a model said after being given that page as a picture; `seenQuote` must be
 //             in the saved answers (checked).
 import { readFile, writeFile, copyFile, mkdir } from 'node:fs/promises';
@@ -67,8 +70,18 @@ for (const s of SITES) {
   const cols = Math.floor(Math.sqrt(1120 * 1440 / height)), rows = Math.floor(height / (1440 / cols));
   if (s.id === 'supermarket' && cols * rows !== measured) throw new Error('the grid rule gives ' + cols * rows + ' pieces, the model reported ' + measured);
   if (t.seenQuote && !seenRuns.some((a) => a.answer.includes(t.seenQuote))) throw new Error(s.id + ': the model never said "' + t.seenQuote + '"');
+  const where = JSON.parse(await readFile(root + 'data/guess/' + s.id + '-lines.json', 'utf8'));
+  if (where.ys.length !== lines.length) throw new Error(s.id + ': positions were measured for ' + where.ys.length + ' lines, the text has ' + lines.length);
+  const ys = where.ys.map((y) => (y ? Math.max(0, Math.min(height, Math.round((y[0] + y[1]) / 2))) : null));
+  for (let k = 0; k < ys.length; k++) {
+    if (ys[k] !== null) continue;
+    let a = k - 1, b = k + 1;
+    while (b < ys.length && ys[b] === null) b++;
+    const before = a >= 0 ? ys[a] : null, after = b < ys.length ? ys[b] : null;
+    ys[k] = before === null ? after : after === null ? before : Math.round(before + (after - before) * (k - a) / (b - a));
+  }
   const task = { seenNote: t.seenNote || '', ask: t.ask, got: t.got, lines: lines.slice(start, start + t.count), caption: t.caption, spot: t.spot };
-  sites.push({ id: s.id, name: s.name, image: 'assets/guess/' + file, height, grid: { cols, rows }, lines, task });
-  console.log(s.id, 'lines:', lines.length, '| name hidden', hidden, 'times | page height', height, '| pieces', cols + ' x ' + rows + ' = ' + cols * rows);
+  sites.push({ id: s.id, name: s.name, image: 'assets/guess/' + file, height, grid: { cols, rows }, lines, ys, task });
+  console.log(s.id, 'lines:', lines.length, '| name hidden', hidden, 'times | page height', height, '| pieces', cols + ' x ' + rows + ' = ' + cols * rows, '| lines placed on the page', where.found, 'of', lines.length, '| page height when placed', where.pageHeight);
 }
 await writeFile(root + 'site/data.js', 'window.DATA = ' + JSON.stringify({ sites }) + ';\n');

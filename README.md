@@ -7,7 +7,7 @@ the way an AI agent receives them, each with a task to do:
    and with the site's own name blocked out;
 2. as an agent that looks gets it: the whole page as one picture, shrunk, cut into pieces, and the
    pieces put one after another in a numbered array;
-3. the real page;
+3. the real page beside the text, moving together;
 4. the two side by side: where the eye found the answer, and what the agent had instead.
 
 ## Run
@@ -19,14 +19,14 @@ For the classroom view press `Cmd+Ctrl+F` (full screen).
 | Stop | What it is | Controls |
 | --- | --- | --- |
 | 1 | The premise, one sentence | `Space` |
-| 2, 3, 4 | One round per site (IKEA, Netflix, Rami Levy), under a task ("What matters most on this page?", "What is number 4 in the popular list?", "What is the cheapest product on the page?"). First the whole text, to scroll through. Then the page as an array of numbered pieces, twelve to a row, so the page does not come back together on the screen; above it, the first numbers of piece 0. The room has to find the answer here too: click the piece it calls out. A wrong piece goes dim and is counted (shown as ✕ beside the clock); a right one lights every piece the answer is spread over. Then the real page, whole, to scroll through. Then one screenful of the page with only the answer lit, beside the lines the agent had for it, and one sentence on what the design did there | scroll, or `↓` `↑` `PageDown` `PageUp` `Home` `End`; `Space` for the next step |
+| 2, 3, 4 | One round per site (IKEA, Netflix, Rami Levy), under a task ("What matters most on this page?", "What is number 4 in the popular list?", "What is the cheapest product on the page?"). First the whole text, to scroll through. Then the page as an array of numbered pieces, twelve to a row, so the page does not come back together on the screen; above it, the first numbers of piece 0. The room has to find the answer here too: click the piece it calls out. A wrong piece goes dim and is counted (shown as ✕ beside the clock); a right one lights every piece the answer is spread over. Then the real page beside the agent's text: scroll either one and the other goes to the same place, the lines that belong to what is on the screen are lit, and a click on a line takes the page to it. Then one screenful of the page with only the answer lit, beside the lines the agent had for it, and one sentence on what the design did there | scroll, or `↓` `↑` `PageDown` `PageUp` `Home` `End`; `Space` for the next step |
 | 5 | All three texts side by side, then each site's picture above its text | `Space` |
 | 6 | The bill: a cut-out of each page where the design spoke, and beside it what reached the agent, one site per press; then one sentence, and how long the room spent as the agent | `Space` |
 | 7 | The closing sentence | `1` returns to the start |
 
 On a phone or tablet there are no keys: two buttons at the foot of the screen move back and forward,
 the text, the pieces and the page scroll by touch, and a piece is checked by tapping it. Held upright,
-the layout stacks and the real page is shown larger than the screen, to move around in.
+the layout stacks (the page above, the text below) and the real page is shown larger than the screen, to move around in.
 
 The public page is at https://altmandania-ui.github.io/which-site-is-this/ . It is served from the
 `gh-pages` branch of this repository, which holds the contents of `site/`. After a change, update it
@@ -39,6 +39,13 @@ A small grey line in the bottom corner says what the next key does; `H` hides it
 
 - How sharp the page-in-pieces is, and how many lines the three-column screen shows: the settings at the top of `site/app.js`.
 - The written sentences (opening, the bill, closing): `site/index.html`.
+- The page and the text move together by measurement, not by guess: `collect/measure-lines.mjs` opened
+  the three live pages on 17 Nov 2026 and found where each saved line is drawn. All 175 IKEA lines were
+  found, 429 of 438 on Rami Levy and 62 of 81 on Netflix; a line that was not found is placed evenly
+  between the found lines around it. The pages were measured after their pictures were taken: Rami
+  Levy was the same height as its picture, IKEA 40 pixels shorter and Netflix 33 taller, so a line can
+  sit that far from where the picture shows it. Text that is hidden from the eye (for screen readers)
+  is lit where it sits in the page, though nothing is drawn there.
 - A clock runs beside the round number while the room is the agent (text and pieces) and stops at the real page.
   The time comes back under the page-beside-text step and, added up, on the bill.
 - Fonts and the three colours: the `:root` block at the top of `site/style.css`. The fonts are
@@ -54,6 +61,7 @@ After any change in `site/`, rebuild the single file: `node collect/build-single
 | File | What it is |
 | --- | --- |
 | `data/guess/ikea.txt`, `data/guess/netflix.txt` | `document.body.innerText` of each home page, untouched |
+| `data/guess/<id>-lines.json` | Where each line of the saved text sits on its page, from `node collect/measure-lines.mjs` (see below) |
 | `data/guess/ikea-full.jpg`, `data/guess/netflix-full.jpg` | Each whole page, 1440 wide (IKEA's cookie notice was closed first) |
 | `data/innerText.txt`, `data/guess/supermarket-full.jpg` | The same two things for rami-levy.co.il; the picture is `data/screenshot-full.png` saved as JPEG |
 | `data/agent-read-vs-seen.json` | An earlier run in which a model was sent the Rami Levy page as a picture. Two things are taken from it: the number of pieces, and one thing the model said |
