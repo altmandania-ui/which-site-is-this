@@ -24,6 +24,14 @@ For the classroom view press `Cmd+Ctrl+F` (full screen).
 | 6 | The bill: a cut-out of each page where the design spoke, and beside it what reached the agent, one site per press; then one sentence, and how long the room spent as the agent | `Space` |
 | 7 | The closing sentence | `1` returns to the start |
 
+On a phone or tablet there are no keys: two buttons at the foot of the screen move back and forward,
+the text, the pieces and the page scroll by touch, and a piece is checked by tapping it. Held upright,
+the layout stacks and the real page is shown larger than the screen, to move around in.
+
+A public copy is at https://altmandania-ui.github.io/which-site-is-this-page/ . It is served from a
+separate public repository that holds only what the page needs (`index.html`, `app.js`, `style.css`,
+`data.js` and the three pictures from `site/`), and it has to be pushed there again after a change.
+
 `Space` (or `Enter`) moves forward, `Backspace` moves back, keys `1` to `7` jump to a stop.
 A small grey line in the bottom corner says what the next key does; `H` hides it. It never shows the answer.
 

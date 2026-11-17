@@ -26,6 +26,7 @@
 
   --edge-x: 6vw;
   --edge-y: 7vh;
+  --bar: 0px;   /* height of the touch buttons at the foot of the screen; none where there are keys */
 }
 
 * { box-sizing: border-box; }
@@ -48,7 +49,8 @@ p { margin: 0; }
 .stage {
   position: relative;
   height: 100vh;
-  padding: var(--edge-y) var(--edge-x);
+  height: 100dvh;
+  padding: var(--edge-y) var(--edge-x) calc(var(--edge-y) + var(--bar));
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -65,6 +67,7 @@ p { margin: 0; }
 .agent div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; unicode-bidi: plaintext; text-align: right; }
 
 /* ---------- a round ---------- */
+.round-head > * { min-width: 0; }
 .round-head { display: flex; justify-content: space-between; align-items: baseline; flex: none; padding-bottom: 3vh; }
 /* The whole text of the page, one line under another, to scroll through. */
 .feed, .page, .seen { overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--mute) transparent; outline: none; }
@@ -87,13 +90,13 @@ p { margin: 0; }
 .tile.hit span { color: var(--light); }
 .tile canvas { display: block; width: 100%; height: auto; image-rendering: pixelated; }
 .tile span { display: block; padding-top: 0.4vh; font: 400 clamp(9px, 0.8vw, 15px)/1 "Courier New", monospace; color: var(--mute); }
-.array-line { padding-top: 0.6vh; font-size: clamp(12px, 1.1vw, 20px); color: var(--mute); text-align: right; }
+.array-line { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-top: 0.6vh; font-size: clamp(12px, 1.1vw, 20px); color: var(--mute); text-align: right; }
 .mode { padding-top: 1vh; }
 
 /* The real page, whole, takes the whole screen and scrolls like the page it is. */
 .page {
   position: absolute;
-  inset: 0;
+  inset: 0 0 var(--bar) 0;
   background: var(--dark);
   opacity: 0;
   transition: opacity 1.6s ease;
@@ -107,7 +110,7 @@ p { margin: 0; }
    It covers the feed and the picture. It fades in, and leaves at once so nothing shows through. */
 .look {
   position: absolute;
-  inset: 0;
+  inset: 0 0 var(--bar) 0;
   z-index: 1;
   padding: var(--edge-y) var(--edge-x);
   display: flex;
@@ -118,7 +121,7 @@ p { margin: 0; }
   opacity: 0;
   pointer-events: none;
 }
-.look.on { opacity: 1; transition: opacity 1.6s ease; }
+.look.on { opacity: 1; transition: opacity 1.6s ease; pointer-events: auto; }
 .look-row { display: flex; gap: 4vw; align-items: flex-start; min-height: 0; }
 .look-shot { position: relative; flex: none; width: min(50vw, 96vh); aspect-ratio: 1440 / 900; overflow: hidden; }
 .look-shot img { position: absolute; left: 0; width: 100%; height: auto; }
@@ -162,6 +165,64 @@ p { margin: 0; }
   padding: 10px 14px;
 }
 .hint-line[hidden] { display: none; }
+
+/* ---------- touch screens: two buttons instead of keys ---------- */
+.touch-nav { display: none; }
+@media (pointer: coarse) {
+  :root { --bar: 58px; }
+  .touch-nav {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 5;
+    height: var(--bar);
+    padding: 0 var(--edge-x);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--dark);
+    border-top: 1px solid #2a2a2a;
+    color: var(--mute);
+    font: 400 14px/1 system-ui, sans-serif;
+  }
+  .touch-nav button {
+    font: 400 17px/1 var(--font-human);
+    color: var(--light);
+    background: none;
+    border: 1px solid var(--mute);
+    border-radius: 999px;
+    padding: 10px 24px;
+    touch-action: manipulation;
+  }
+  .touch-nav button:disabled { opacity: 0.25; }
+  .hint-line { display: none; }
+  .tile { touch-action: manipulation; }
+}
+
+/* ---------- a phone held upright ---------- */
+@media (max-width: 700px) {
+  :root { --edge-x: 5vw; --edge-y: 3vh; }
+  .big { font-size: 36px; }
+  .ask { font-size: 27px; }
+  .small { font-size: 17px; }
+  .round-head { flex-direction: column; align-items: stretch; gap: 1vh; padding-bottom: 1.5vh; }
+  #round-count { text-align: right; }
+  .array-line { text-align: left; }
+  .feed { font-size: 16px; }
+  /* the real page is 1440 wide: shown larger than the screen, to move around in */
+  .page { overflow: auto; }
+  .page img { width: 260%; max-width: none; }
+  /* page above, the agent's lines below, and the whole thing scrolls if it has to */
+  .look { overflow-y: auto; justify-content: flex-start; gap: 2vh; }
+  .look-row { flex-direction: column; gap: 2vh; }
+  .look-shot { width: 100%; }
+  #look-text { flex: none; width: 100%; font-size: 14px; }
+  .tile span { font-size: 9px; }
+  #screen-all { padding: 3vh 3vw calc(3vh + var(--bar)); }
+  .col .agent { font-size: 9px; }
+  .crop { height: 8vh; }
+  .sum-rows { gap: 2.5vh; }
+  .sum-row .agent { font-size: 15px; }
+}
 </style>
 </head>
 <body>
@@ -221,6 +282,13 @@ p { margin: 0; }
   <p class="small after">מודל חכם יותר לא יתקן את זה: הוא לא יכול לקרוא מה שהעמוד לא שלח לו. גם את זה צריך לעצב.</p>
 </section>
 
+<!-- On a touch screen there are no keys: two buttons at the foot of the screen move back and forward. -->
+<nav id="touch-nav" class="touch-nav">
+  <button id="nav-back" type="button">חזרה</button>
+  <span id="nav-at" dir="ltr"></span>
+  <button id="nav-next" type="button">המשך</button>
+</nav>
+
 <!-- Presenter hint: what the next key does. Press H to hide or show it. -->
 <div id="hint" class="hint-line"></div>
 
@@ -242,6 +310,10 @@ window.DATA = {"sites":[{"id":"ikea","name":"IKEA","image":"data:image/jpeg;base
   // How many pieces of the array go on one row of the screen. Keep it different from the number of
   // pieces across each page (9, 23 and 16), or that page will simply appear whole.
   var PIECES_PER_ROW = 12;
+  // On a phone held upright everything is narrower: fewer pieces to a row, and the lit screenful of
+  // the page is shown closer.
+  var NARROW = window.matchMedia('(max-width: 700px)');
+  var PIECES_PER_ROW_NARROW = 6, CLOSER_NARROW = 2.5;
 
   var $ = function (id) { return document.getElementById(id); };
   function line(text) { var d = document.createElement('div'); d.textContent = text; return d; }
@@ -290,7 +362,7 @@ window.DATA = {"sites":[{"id":"ikea","name":"IKEA","image":"data:image/jpeg;base
   function drawSeen(i) {
     var g = SITES[i].grid, im = pictures[i], box = $('seen-array'), P = PIXELS_PER_PIECE;
     box.textContent = ''; box.classList.remove('found');
-    box.style.gridTemplateColumns = 'repeat(' + PIECES_PER_ROW + ', 1fr)';
+    box.style.gridTemplateColumns = 'repeat(' + (NARROW.matches ? PIECES_PER_ROW_NARROW : PIECES_PER_ROW) + ', 1fr)';
     $('round-array').textContent = '';
     var paint = function () {
       if (shownSite !== i || box.firstChild) return;
@@ -329,14 +401,19 @@ window.DATA = {"sites":[{"id":"ikea","name":"IKEA","image":"data:image/jpeg;base
       $('look-seen').textContent = task.seenNote;
       $('page-img').src = site.image;
       // The last step, made ready: one screenful of the page with only the answer lit, beside the
-      // lines the agent had. The screenful is the one with the answer at its middle.
+      // lines the agent had. The screenful is the one with the answer at its middle; on a narrow
+      // screen it is a smaller part of the page, shown closer.
       var x = task.spot[0], y = task.spot[1], w = task.spot[2], h = task.spot[3];
-      var top = Math.max(0, Math.min(site.height - SCREEN, Math.round(y + h / 2 - SCREEN / 2)));
+      var closer = NARROW.matches ? CLOSER_NARROW : 1, vw = W / closer, vh = SCREEN / closer;
+      var left = Math.max(0, Math.min(W - vw, Math.round(x + w / 2 - vw / 2)));
+      var top = Math.max(0, Math.min(site.height - vh, Math.round(y + h / 2 - vh / 2)));
       $('look-img').src = site.image;
-      $('look-img').style.top = pct(-100 * top / SCREEN);
+      $('look-img').style.width = pct(100 * closer);
+      $('look-img').style.left = pct(-100 * left / vw);
+      $('look-img').style.top = pct(-100 * top / vh);
       var spot = $('look-spot').style;
-      spot.left = pct(100 * x / W); spot.width = pct(100 * w / W);
-      spot.top = pct(100 * (y - top) / SCREEN); spot.height = pct(100 * h / SCREEN);
+      spot.left = pct(100 * (x - left) / vw); spot.width = pct(100 * w / vw);
+      spot.top = pct(100 * (y - top) / vh); spot.height = pct(100 * h / vh);
       $('look-text').textContent = '';
       task.lines.forEach(function (l) { $('look-text').appendChild(line(l)); });
       $('look-caption').textContent = task.caption;
@@ -348,7 +425,7 @@ window.DATA = {"sites":[{"id":"ikea","name":"IKEA","image":"data:image/jpeg;base
     $('round-mode').textContent = step === 1
       ? 'סוכן שרואה: העמוד כולו כתמונה אחת, חתוכה ל-' + pieces + ' חלקים, אחד אחרי השני. באיזה חלק התשובה?'
       : 'סוכן שקורא: כל הטקסט של העמוד, ' + site.lines.length + ' שורות';
-    if (step === 2 && !pageEl.classList.contains('on')) pageEl.scrollTop = 0;
+    if (step === 2 && !pageEl.classList.contains('on')) { pageEl.scrollTop = 0; pageEl.scrollLeft = 0; }
     pageEl.classList.toggle('on', step === 2);
     showClock(stop.site);
     if (step <= 1) startClock(stop.site);
@@ -420,7 +497,14 @@ window.DATA = {"sites":[{"id":"ikea","name":"IKEA","image":"data:image/jpeg;base
     if (stop.el === 'screen-end') t = 'סוף · 1: להתחלה';
     hintEl.textContent = t + ' · Backspace: צעד אחורה · H: להסתיר';
     hintEl.hidden = !hintsOn;
+    // the touch buttons
+    var last = at === STOPS.length - 1 && step === stop.steps - 1;
+    $('nav-at').textContent = (at + 1) + ' / ' + STOPS.length;
+    $('nav-next').textContent = last ? 'להתחלה' : 'המשך';
+    $('nav-back').disabled = at === 0 && step === 0;
   }
+  $('nav-next').onclick = function () { if (at === STOPS.length - 1 && step === STOPS[at].steps - 1) go(0); else advance(1); };
+  $('nav-back').onclick = function () { advance(-1); };
 
   // ---------- navigation ----------
   function render() {

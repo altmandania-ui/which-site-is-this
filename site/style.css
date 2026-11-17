@@ -19,6 +19,7 @@
 
   --edge-x: 6vw;
   --edge-y: 7vh;
+  --bar: 0px;   /* height of the touch buttons at the foot of the screen; none where there are keys */
 }
 
 * { box-sizing: border-box; }
@@ -41,7 +42,8 @@ p { margin: 0; }
 .stage {
   position: relative;
   height: 100vh;
-  padding: var(--edge-y) var(--edge-x);
+  height: 100dvh;
+  padding: var(--edge-y) var(--edge-x) calc(var(--edge-y) + var(--bar));
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -58,6 +60,7 @@ p { margin: 0; }
 .agent div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; unicode-bidi: plaintext; text-align: right; }
 
 /* ---------- a round ---------- */
+.round-head > * { min-width: 0; }
 .round-head { display: flex; justify-content: space-between; align-items: baseline; flex: none; padding-bottom: 3vh; }
 /* The whole text of the page, one line under another, to scroll through. */
 .feed, .page, .seen { overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--mute) transparent; outline: none; }
@@ -80,13 +83,13 @@ p { margin: 0; }
 .tile.hit span { color: var(--light); }
 .tile canvas { display: block; width: 100%; height: auto; image-rendering: pixelated; }
 .tile span { display: block; padding-top: 0.4vh; font: 400 clamp(9px, 0.8vw, 15px)/1 "Courier New", monospace; color: var(--mute); }
-.array-line { padding-top: 0.6vh; font-size: clamp(12px, 1.1vw, 20px); color: var(--mute); text-align: right; }
+.array-line { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-top: 0.6vh; font-size: clamp(12px, 1.1vw, 20px); color: var(--mute); text-align: right; }
 .mode { padding-top: 1vh; }
 
 /* The real page, whole, takes the whole screen and scrolls like the page it is. */
 .page {
   position: absolute;
-  inset: 0;
+  inset: 0 0 var(--bar) 0;
   background: var(--dark);
   opacity: 0;
   transition: opacity 1.6s ease;
@@ -100,7 +103,7 @@ p { margin: 0; }
    It covers the feed and the picture. It fades in, and leaves at once so nothing shows through. */
 .look {
   position: absolute;
-  inset: 0;
+  inset: 0 0 var(--bar) 0;
   z-index: 1;
   padding: var(--edge-y) var(--edge-x);
   display: flex;
@@ -111,7 +114,7 @@ p { margin: 0; }
   opacity: 0;
   pointer-events: none;
 }
-.look.on { opacity: 1; transition: opacity 1.6s ease; }
+.look.on { opacity: 1; transition: opacity 1.6s ease; pointer-events: auto; }
 .look-row { display: flex; gap: 4vw; align-items: flex-start; min-height: 0; }
 .look-shot { position: relative; flex: none; width: min(50vw, 96vh); aspect-ratio: 1440 / 900; overflow: hidden; }
 .look-shot img { position: absolute; left: 0; width: 100%; height: auto; }
@@ -155,3 +158,61 @@ p { margin: 0; }
   padding: 10px 14px;
 }
 .hint-line[hidden] { display: none; }
+
+/* ---------- touch screens: two buttons instead of keys ---------- */
+.touch-nav { display: none; }
+@media (pointer: coarse) {
+  :root { --bar: 58px; }
+  .touch-nav {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 5;
+    height: var(--bar);
+    padding: 0 var(--edge-x);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--dark);
+    border-top: 1px solid #2a2a2a;
+    color: var(--mute);
+    font: 400 14px/1 system-ui, sans-serif;
+  }
+  .touch-nav button {
+    font: 400 17px/1 var(--font-human);
+    color: var(--light);
+    background: none;
+    border: 1px solid var(--mute);
+    border-radius: 999px;
+    padding: 10px 24px;
+    touch-action: manipulation;
+  }
+  .touch-nav button:disabled { opacity: 0.25; }
+  .hint-line { display: none; }
+  .tile { touch-action: manipulation; }
+}
+
+/* ---------- a phone held upright ---------- */
+@media (max-width: 700px) {
+  :root { --edge-x: 5vw; --edge-y: 3vh; }
+  .big { font-size: 36px; }
+  .ask { font-size: 27px; }
+  .small { font-size: 17px; }
+  .round-head { flex-direction: column; align-items: stretch; gap: 1vh; padding-bottom: 1.5vh; }
+  #round-count { text-align: right; }
+  .array-line { text-align: left; }
+  .feed { font-size: 16px; }
+  /* the real page is 1440 wide: shown larger than the screen, to move around in */
+  .page { overflow: auto; }
+  .page img { width: 260%; max-width: none; }
+  /* page above, the agent's lines below, and the whole thing scrolls if it has to */
+  .look { overflow-y: auto; justify-content: flex-start; gap: 2vh; }
+  .look-row { flex-direction: column; gap: 2vh; }
+  .look-shot { width: 100%; }
+  #look-text { flex: none; width: 100%; font-size: 14px; }
+  .tile span { font-size: 9px; }
+  #screen-all { padding: 3vh 3vw calc(3vh + var(--bar)); }
+  .col .agent { font-size: 9px; }
+  .crop { height: 8vh; }
+  .sum-rows { gap: 2.5vh; }
+  .sum-row .agent { font-size: 15px; }
+}
