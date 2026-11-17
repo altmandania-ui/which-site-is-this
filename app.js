@@ -12,6 +12,10 @@
   // How many pieces of the array go on one row of the screen. Keep it different from the number of
   // pieces across each page (9, 23 and 16), or that page will simply appear whole.
   var PIECES_PER_ROW = 12;
+  // On a phone held upright everything is narrower: fewer pieces to a row, and the lit screenful of
+  // the page is shown closer.
+  var NARROW = window.matchMedia('(max-width: 700px)');
+  var PIECES_PER_ROW_NARROW = 6, CLOSER_NARROW = 2.5;
 
   var $ = function (id) { return document.getElementById(id); };
   function line(text) { var d = document.createElement('div'); d.textContent = text; return d; }
@@ -60,7 +64,7 @@
   function drawSeen(i) {
     var g = SITES[i].grid, im = pictures[i], box = $('seen-array'), P = PIXELS_PER_PIECE;
     box.textContent = ''; box.classList.remove('found');
-    box.style.gridTemplateColumns = 'repeat(' + PIECES_PER_ROW + ', 1fr)';
+    box.style.gridTemplateColumns = 'repeat(' + (NARROW.matches ? PIECES_PER_ROW_NARROW : PIECES_PER_ROW) + ', 1fr)';
     $('round-array').textContent = '';
     var paint = function () {
       if (shownSite !== i || box.firstChild) return;
@@ -99,14 +103,19 @@
       $('look-seen').textContent = task.seenNote;
       $('page-img').src = site.image;
       // The last step, made ready: one screenful of the page with only the answer lit, beside the
-      // lines the agent had. The screenful is the one with the answer at its middle.
+      // lines the agent had. The screenful is the one with the answer at its middle; on a narrow
+      // screen it is a smaller part of the page, shown closer.
       var x = task.spot[0], y = task.spot[1], w = task.spot[2], h = task.spot[3];
-      var top = Math.max(0, Math.min(site.height - SCREEN, Math.round(y + h / 2 - SCREEN / 2)));
+      var closer = NARROW.matches ? CLOSER_NARROW : 1, vw = W / closer, vh = SCREEN / closer;
+      var left = Math.max(0, Math.min(W - vw, Math.round(x + w / 2 - vw / 2)));
+      var top = Math.max(0, Math.min(site.height - vh, Math.round(y + h / 2 - vh / 2)));
       $('look-img').src = site.image;
-      $('look-img').style.top = pct(-100 * top / SCREEN);
+      $('look-img').style.width = pct(100 * closer);
+      $('look-img').style.left = pct(-100 * left / vw);
+      $('look-img').style.top = pct(-100 * top / vh);
       var spot = $('look-spot').style;
-      spot.left = pct(100 * x / W); spot.width = pct(100 * w / W);
-      spot.top = pct(100 * (y - top) / SCREEN); spot.height = pct(100 * h / SCREEN);
+      spot.left = pct(100 * (x - left) / vw); spot.width = pct(100 * w / vw);
+      spot.top = pct(100 * (y - top) / vh); spot.height = pct(100 * h / vh);
       $('look-text').textContent = '';
       task.lines.forEach(function (l) { $('look-text').appendChild(line(l)); });
       $('look-caption').textContent = task.caption;
@@ -118,7 +127,7 @@
     $('round-mode').textContent = step === 1
       ? 'סוכן שרואה: העמוד כולו כתמונה אחת, חתוכה ל-' + pieces + ' חלקים, אחד אחרי השני. באיזה חלק התשובה?'
       : 'סוכן שקורא: כל הטקסט של העמוד, ' + site.lines.length + ' שורות';
-    if (step === 2 && !pageEl.classList.contains('on')) pageEl.scrollTop = 0;
+    if (step === 2 && !pageEl.classList.contains('on')) { pageEl.scrollTop = 0; pageEl.scrollLeft = 0; }
     pageEl.classList.toggle('on', step === 2);
     showClock(stop.site);
     if (step <= 1) startClock(stop.site);
@@ -190,7 +199,14 @@
     if (stop.el === 'screen-end') t = 'סוף · 1: להתחלה';
     hintEl.textContent = t + ' · Backspace: צעד אחורה · H: להסתיר';
     hintEl.hidden = !hintsOn;
+    // the touch buttons
+    var last = at === STOPS.length - 1 && step === stop.steps - 1;
+    $('nav-at').textContent = (at + 1) + ' / ' + STOPS.length;
+    $('nav-next').textContent = last ? 'להתחלה' : 'המשך';
+    $('nav-back').disabled = at === 0 && step === 0;
   }
+  $('nav-next').onclick = function () { if (at === STOPS.length - 1 && step === STOPS[at].steps - 1) go(0); else advance(1); };
+  $('nav-back').onclick = function () { advance(-1); };
 
   // ---------- navigation ----------
   function render() {
